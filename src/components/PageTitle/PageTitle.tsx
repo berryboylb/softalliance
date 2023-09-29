@@ -11,7 +11,7 @@ export default function PagTitle() {
     <Suspense>
       <div className={Styles.cont}>
         <h3 className={Styles.link_active}>
-          {lastSegment.replace(/%20/g, " ")}
+          {lastSegment || "Dashboard"}
         </h3>
       </div>
     </Suspense>
