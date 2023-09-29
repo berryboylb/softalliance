@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any */
 import React, { Suspense } from "react";
 import Styles from "./css/style.module.css";
 import LiveSearch from "../LiveSearch/LiveSearch";
 import { results } from "../../constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faStickyNote } from "@fortawesome/free-solid-svg-icons";
-
 
 export default function EleemntsHeader() {
   const [selectedProfile, setSelectedProfile] =
@@ -20,7 +20,7 @@ export default function EleemntsHeader() {
         name: string;
       }[]
     >();
-  const handleChange: changeHandler = (e) => {
+  const handleChange = (e:any) => {
     const { target } = e;
     if (!target.value.trim()) return setSearchResults([]);
 

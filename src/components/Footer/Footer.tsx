@@ -1,4 +1,3 @@
-import React from "react";
 
 import { Suspense } from "react";
 import Styles from "./css/style.module.css";

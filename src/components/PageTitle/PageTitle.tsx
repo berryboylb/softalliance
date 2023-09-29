@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import Styles from "./css/style.module.css";
 

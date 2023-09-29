@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any */
+
 import React, { Suspense } from "react";
 import { useTable } from "react-table";
 import {
@@ -7,8 +9,8 @@ import {
   faPen,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMediaQuery } from "react-responsive";
 import Style from "./css/styles.module.css";
 type Props = {
   dataArr: any[];
@@ -18,7 +20,6 @@ type Props = {
   }[];
 };
 const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
-  const isMobile: boolean = useMediaQuery({ query: `(max-width: 768px)` });
   const data = React.useMemo(() => dataArr, []);
   const columns: any = React.useMemo(() => columnsArr, []);
   const [box, setBox] = React.useState(false);
@@ -60,7 +61,7 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
               prepareRow(row);
               return (
                 <tr className={Style.tr_body} {...row.getRowProps()}>
-                  {row.cells.map((cell, i) => {
+                  {row.cells.map((cell) => {
                     // let cellClassName = "";
                     // if (cell.column.id === "status") {
                     //   // Check the cell value and apply conditional styling
