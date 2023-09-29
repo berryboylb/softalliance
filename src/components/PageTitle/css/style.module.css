@@ -1,0 +1,18 @@
+.cont {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.cont .link_active {
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: #2D416F;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .cont .link_active {
+    font-size: 1.5rem;
+  }
+}/*# sourceMappingURL=style.module.css.map */

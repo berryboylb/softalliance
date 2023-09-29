@@ -1,0 +1,112 @@
+.table {
+  position: relative;
+  overflow: auto;
+  margin-top: 1rem;
+}
+.table .table_main {
+  width: 100%;
+  font-size: 0.875rem;
+  text-align: left;
+  border-collapse: collapse;
+  border: none;
+}
+.table .table_main .tr_head {
+  background-color: #2D416F;
+}
+.table .table_main th {
+  color: white;
+  font-family: "Gilroy", sans-serif;
+  font-size: 0.875rem;
+  padding: 0.875rem;
+  text-transform: capitalize;
+}
+.table .table_main th .title_icon {
+  margin-left: 0.5rem;
+  display: inline-block;
+}
+
+.tr_body {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0.875rem;
+  color: #2D416F;
+  height: 50px;
+  font-family: "poppins", sans-serif;
+}
+
+.action {
+  text-align: center;
+}
+
+.bond {
+  position: relative;
+  width: 100%;
+}
+.bond .popup {
+  width: 150px;
+  position: absolute;
+  z-index: 9999;
+  right: 0;
+  bottom: 1rem;
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 1px 10px 5px 0px rgba(201, 177, 177, 0.75);
+  -webkit-box-shadow: 1px 10px 5px 0px rgba(201, 177, 177, 0.75);
+  -moz-box-shadow: 1px 10px 5px 0px rgba(201, 177, 177, 0.75);
+}
+.bond .popup button {
+  outline: none;
+  background: none;
+  border: none;
+  display: block;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: "poppins", sans-serif;
+}
+.bond .popup button:hover {
+  opacity: 0.8;
+}
+.bond .popup button .con {
+  margin-right: 0.5rem;
+}
+
+.edit {
+  color: #2D416F;
+}
+
+.view {
+  color: #E05453 !important;
+}
+
+.test {
+  padding: 0.875rem;
+}
+
+.activeCell {
+  color: #4BAA79;
+  text-align: center;
+}
+
+.inactiveCell {
+  color: #E05453;
+  text-align: center;
+}
+
+.box {
+  background: none;
+  border: 1px solid #4BAA79;
+  color: #4BAA79;
+  outline: none;
+  cursor: pointer;
+  font-size: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+@media screen and (min-width: 1024px) {
+  .box {
+    font-size: 1rem;
+  }
+}/*# sourceMappingURL=styles.module.css.map */

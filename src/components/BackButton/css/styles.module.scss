@@ -1,0 +1,17 @@
+.button {
+    background: none;
+    border: 1px solid #4BAA79;
+    color: #4BAA79;
+    outline: none;
+    cursor: pointer;
+    font-size: .875rem;
+    padding: .5rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 1024px) {
+    .button {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,23 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #2D416F;
+    font-size: 1rem;
+    color: white;
+    z-index: 9999;
+    font-family: 'Gilroy', sans-serif;
+
+    a {
+        color: white;
+        text-decoration: none;
+        &:hover {
+            opacity: .8;
+        }
+    }
+}

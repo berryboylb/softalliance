@@ -1,0 +1,69 @@
+.container {
+  width: auto;
+  position: relative;
+  font-family: "poppins", sans-serif;
+  padding: 1rem;
+  border-radius: 10px;
+  font-family: "Gilroy", sans-serif;
+}
+.container .flex {
+  display: flex;
+  align-items: center;
+}
+.container .flex .iconBig {
+  font-size: 1rem;
+  background: #2D416F;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: white;
+}
+.container .flex .content {
+  margin: 0 1rem;
+}
+.container .flex .content p {
+  font-size: 0.875rem;
+  color: #2D416F;
+  font-weight: 500;
+}
+.container .flex .content h1 {
+  font-size: 1rem;
+  color: #2D416F;
+  font-weight: 700;
+  margin-top: 0.75rem;
+}
+.container .flex .button {
+  display: inline;
+  background: none;
+  color: #818DA9;
+  font-size: 1.125rem;
+  border: none;
+  outline: none;
+  transition: all ease-in 300ms;
+}
+.container .list {
+  position: absolute;
+  right: 0;
+  top: 3rem;
+  width: 150px;
+  border-radius: 30px;
+  z-index: 9999;
+  padding: 0.5rem;
+}
+.container .list button {
+  width: 100%;
+  display: inline-block;
+  color: #818DA9;
+  font-size: 0.75rem;
+  border: none;
+  outline: none;
+  transition: all ease-in 300ms;
+  text-align: center;
+  padding: 0.5rem;
+  text-transform: capitalize;
+  cursor: pointer;
+  text-align: left;
+}
+.container .list button:hover {
+  color: #2D416F;
+}/*# sourceMappingURL=style.module.css.map */

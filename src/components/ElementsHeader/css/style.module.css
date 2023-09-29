@@ -1,0 +1,50 @@
+.element {
+  background: #F4F6F8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+.element .inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.element .iconBig {
+  font-size: 1.5rem;
+  background: #2D416F;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+.element button {
+  color: #fff;
+  background: #4BAA79;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  border: none;
+  outline: none;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all ease-in 300ms;
+}
+.element button:hover {
+  opacity: 0.8;
+}
+.element button .plus {
+  margin-left: 1rem;
+  font-size: 1rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .element button {
+    font-size: 1rem;
+  }
+  .element button .plus {
+    font-size: 1.2rem;
+  }
+}/*# sourceMappingURL=style.module.css.map */

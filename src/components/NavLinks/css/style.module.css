@@ -1,0 +1,39 @@
+.cont {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.75rem;
+  font-family: "Gilroy", sans-serif;
+}
+.cont .big {
+  cursor: pointer;
+  background: none;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  color: #ABB3C5;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+.cont .icon {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  color: #ABB3C5;
+}
+.cont .link {
+  font-size: 1rem;
+  cursor: pointer;
+  text-transform: capitalize;
+  color: #ABB3C5;
+  font-weight: 700;
+  margin-left: 0.5rem;
+}
+.cont .link_active {
+  font-size: 1rem;
+  cursor: pointer;
+  text-transform: capitalize;
+  color: #2D416F;
+  font-weight: 700;
+  margin-left: 0.5rem;
+}/*# sourceMappingURL=style.module.css.map */

@@ -1,0 +1,133 @@
+.table {
+    position: relative;
+    overflow: auto;
+    margin-top: 1rem;
+
+    .table_main {
+        width: 100%;
+        font-size: .875rem;
+        text-align: left;
+        border-collapse: collapse;
+        border: none;
+
+        .tr_head {
+            background-color: #2D416F;
+        }
+
+        th {
+            // text-[#646C79] font-ubuntu text-sm lg: text-base px-6 py-3
+            color: white;
+            font-family: "Gilroy", sans-serif;
+            font-size: .875rem;
+            padding: .875rem;
+            text-transform: capitalize;
+
+            .title_icon {
+                margin-left: .5rem;
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.tr_body {
+    // overflow-hidden whitespace-nowrap h-[100px] rounded-[10px] bg-white font-ubuntu rounded-[10px] bg-white border-b dark: bg-gray-900 dark:border-gray-700 mb-5
+    overflow: hidden;
+    white-space: nowrap;
+    padding: .875rem;
+    color: #2D416F;
+    height: 50px;
+    font-family: "poppins", sans-serif;
+}
+
+.action {
+    // text-[#232E43] font-ubuntu text-sm lg: text-base px-6 py-4
+    text-align: center;
+
+
+}
+
+.bond {
+    position: relative;
+    width: 100%;
+
+    .popup {
+        width: 150px;
+        position: absolute;
+        z-index: 9999;
+        right: 0;
+        bottom: 1rem;
+        background: #fff;
+        padding: .5rem;
+        border-radius: 4px;
+        box-shadow: 1px 10px 5px 0px rgba(201, 177, 177, 0.75);
+        -webkit-box-shadow: 1px 10px 5px 0px rgba(201, 177, 177, 0.75);
+        -moz-box-shadow: 1px 10px 5px 0px rgba(201, 177, 177, 0.75);
+
+        button {
+            outline: none;
+            background: none;
+            border: none;
+            display: block;
+            padding: .5rem;
+            font-size: .75rem;
+            cursor: pointer;
+            font-family: 'poppins', sans-serif;
+
+            &:hover {
+                opacity: .8;
+            }
+
+            .con {
+                margin-right: .5rem;
+            }
+
+
+        }
+
+
+
+
+    }
+}
+
+.edit {
+    color: #2D416F;
+}
+
+.view {
+    color: #E05453 !important;
+}
+
+.test {
+    // text-[#232E43] font-ubuntu text-sm lg: text-base px-6 py-4
+    padding: .875rem;
+}
+
+.activeCell {
+    color: #4BAA79 ;
+    text-align: center;
+}
+
+.inactiveCell {
+    color: #E05453;
+    text-align: center;
+}
+
+
+.box {
+    background: none;
+    border: 1px solid #4BAA79;
+    color: #4BAA79;
+    outline: none;
+    cursor: pointer;
+    font-size: .5rem;
+    padding: .5rem;
+    border-radius: 5px;
+}
+
+@media screen and (min-width: 1024px) {
+    .box {
+        font-size: 1rem;
+    }
+}

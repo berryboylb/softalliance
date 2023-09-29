@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300&family=Poppins:wght@300&display=swap");
+:root {
+  font-family: "Poppins", sans-serif;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.my-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 576px) {
+  .my-container {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .my-container {
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .my-container {
+    width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .my-container {
+    width: 1140px;
+  }
+}
+
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./fonts/Gilroy-Light.otf') format('.otf');
+  /* Add other font formats if needed */
+}
