@@ -4,11 +4,6 @@ import NotFound from "./components/NotFound/NotFound";
 import { DashboardLayout } from "./layouts";
 
 const routes: RouteObject[] = [
-  // {
-  //   element: <h1>hello page i neeed to make the dashboard home page though</h1>,
-  //   index: true,
-  //   errorElement: <NotFound />,
-  // },
   {
     path: "/",
     element: <DashboardLayout />,

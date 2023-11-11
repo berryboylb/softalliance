@@ -5,7 +5,7 @@
     .icon {
         display: inline-block;
         margin-left: 1.25rem;
-        font-size: 0.875rem;
+        font-size: 0.87rem !important;
     }
 
     .iconBig {
@@ -20,7 +20,7 @@
 
     .title {
         display: inline-block;
-        margin-left: 1.25rem;
+        margin-left: 1rem;
         font-size: .75rem;
         color: #57678C;
     }
@@ -47,18 +47,19 @@
     position: relative;
     width: 100%;
     color: white;
-    padding-left: 2.25rem;
+    // padding-left: 2.25rem;
     margin: .5rem 0;
-    padding: .75rem 0;
-    padding-left: 2.5rem;
+    padding: .75rem;
+    // padding-left: 2.5rem;
     border-radius: 30px;
     display: flex;
+    font-size: .875rem;
 }
 
 .inactive_icon_mode {
     position: relative;
     border-radius: 10px;
-    padding: 1rem 1.5rem;
+    padding: 1rem;
     width: 100%;
     background: #4BAA79;
     color: white;
@@ -87,6 +88,7 @@
     width: 100%;
     color: #818DA9;
     display: flex;
+    
 
     &:hover {
         background: #4BAA79;
@@ -96,8 +98,8 @@
 }
 
 .normal_not_icon_mode {
-    margin: .75rem 0;
-    padding: 1rem 1.5rem;
+    margin: .5rem 0;
+    padding: 1rem;
     width: 100%;
     color: #818DA9;
     display: flex;
@@ -133,7 +135,7 @@
     position: relative;
     width: 100%;
     color: white;
-    padding-left: 2.25rem;
+    padding-left: 1rem;
     margin: .5rem 0;
     padding: .75rem 0;
     padding-left: 2.5rem;
@@ -145,13 +147,15 @@
 .inactive_icon_mode_sublink {
     position: relative;
     border-radius: 10px;
-    padding: 1rem 1.5rem;
+    padding: 1rem 1rem;
     width: 100%;
     background: #F3FFF1;
     color: #2D416F;
     display: flex;
     align-items: center;
     text-decoration: none;
+    font-size: .75rem;
+    margin-top: .5rem;
 
     &:hover {
         opacity: .8;
@@ -160,12 +164,12 @@
 }
 
 .normal_icon_mode_sublink {
-    margin: .5rem 0;
-    padding: .75rem 0;
-    padding-left: 2.5rem;
+    margin-top: .5rem;
+    padding: 1rem;
     width: 100%;
     color: #57678C;
     display: flex;
+    font-size: .75rem;
 
     &:hover {
         opacity: .8;
@@ -175,11 +179,12 @@
 }
 
 .normal_not_icon_mode_sublink {
-    margin-top: 1rem;
-    padding: 1rem 1.5rem;
+    margin-top: .5rem;
+    padding: 1rem 1rem;
     width: 100%;
     color: #57678C;
     text-decoration: none;
+    font-size: .8rem;
 
     &:hover {
         background: #F3FFF1;

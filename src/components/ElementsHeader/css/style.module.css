@@ -10,21 +10,24 @@
   justify-content: space-between;
   align-items: center;
 }
-.element .iconBig {
-  font-size: 1.5rem;
+.element .filter_ {
   background: #2D416F;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 1rem;
   cursor: pointer;
   color: white;
-  font-size: 1rem;
   margin-left: 1rem;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.element button {
+.element .btn {
   color: #fff;
   background: #4BAA79;
-  border-radius: 10px;
-  padding: 1rem 2rem;
+  border-radius: 4px;
+  padding: 1rem 1.5em;
   border: none;
   outline: none;
   font-weight: 700;
@@ -32,12 +35,13 @@
   cursor: pointer;
   transition: all ease-in 300ms;
 }
-.element button:hover {
-  opacity: 0.8;
+.element .btn:hover {
+  opacity: 0.9;
+  transition: all 0.3ms ease;
 }
-.element button .plus {
+.element .btn .plus {
   margin-left: 1rem;
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 
 @media screen and (min-width: 1024px) {

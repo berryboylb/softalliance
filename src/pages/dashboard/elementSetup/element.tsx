@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { get } from "../../../store/reducers/elements-reducer";
 import { getLoop } from "../../../store/reducers/lookup-reducer";
@@ -11,9 +11,14 @@ const Empty = lazy(
 );
 
 const Table = lazy(() => import("../../../components/Table/Table"));
+const Modal = lazy(() => import("../../../components/ModalMain/Modalmain"));
+const Form = lazy(() => import("../../../components/CreateElementForm/CreateElementForm"));
+
 export default function Elements() {
   const dispatch = useAppDispatch();
   const elements = useAppSelector((state) => state.elements);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const toggle = () => setIsOpen((k) => !k);
   // const lookups = useAppSelector((state) => state.lookup);
   useEffect(() => {
     dispatch(get());
@@ -22,7 +27,7 @@ export default function Elements() {
   }, [dispatch]);
   return (
     <Suspense>
-      <EleemntsHeader />
+      <EleemntsHeader toggle={toggle} />
       {!elements.loading &&
       elements.elements &&
       elements.elements.length > 0 ? (
@@ -30,6 +35,9 @@ export default function Elements() {
       ) : (
         <Empty />
       )}
+      <Modal modalIsOpen={modalIsOpen} closeModal={toggle}>
+       <Form/>
+      </Modal>
     </Suspense>
   );
 }

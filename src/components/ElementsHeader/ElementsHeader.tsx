@@ -4,9 +4,10 @@ import Styles from "./css/style.module.css";
 import LiveSearch from "../LiveSearch/LiveSearch";
 import { results } from "../../constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faStickyNote } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Filter } from "../../assets";
 
-export default function EleemntsHeader() {
+export default function EleemntsHeader({ toggle }: {toggle: () => void}) {
   const [selectedProfile, setSelectedProfile] =
     React.useState<{
       id: string;
@@ -51,9 +52,11 @@ export default function EleemntsHeader() {
             )}
           />
 
-          <FontAwesomeIcon className={Styles.iconBig} icon={faStickyNote} />
+          <button className={Styles.filter_}>
+            <img src={Filter} alt={Filter} />
+          </button>
         </div>
-        <button>
+        <button className={Styles.btn} onClick={toggle}>
           Create Element{" "}
           <FontAwesomeIcon className={Styles.plus} icon={faPlus} />
         </button>

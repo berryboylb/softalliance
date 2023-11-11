@@ -2,12 +2,7 @@ import React, { Suspense } from "react";
 import { Logo } from "../../assets";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import {
-  faChevronLeft,
-  faChevronRight,
-  faLocationArrow,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 import { dashBoardLinks, utilsLinks } from "../../constants";
 import Styles from "./css/style.module.css";
 import { options } from "../../constants";
@@ -19,13 +14,12 @@ type Props = {
   onclick: () => void;
   handleLogout?: () => void;
   currentOption: string;
-  toggleCurrentOption: (choice:string) => void
+  toggleCurrentOption: (choice: string) => void;
 };
 
 const Index: React.FC<Props> = ({
   mobileNav,
   expand,
-  onclick,
   handleLogout,
   currentOption,
   toggleCurrentOption,
@@ -33,13 +27,6 @@ const Index: React.FC<Props> = ({
   const isMobile: boolean = useMediaQuery({ query: `(max-width: 768px)` });
   return (
     <Suspense>
-      <div
-        className={expand ? Styles.sidebar_collasped : Styles.sidebar_expanded}
-      >
-        <button className={Styles.btn} onClick={onclick}>
-          <FontAwesomeIcon icon={expand ? faChevronLeft : faChevronRight} />
-        </button>
-      </div>
       <div
         className={
           isMobile
@@ -57,7 +44,6 @@ const Index: React.FC<Props> = ({
         >
           <img src={Logo} alt="Soft Allaince" />
         </Link>
-
         <div className={Styles.list}>
           <Switch
             mainIcon={faLocationArrow}

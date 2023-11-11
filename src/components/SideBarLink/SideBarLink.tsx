@@ -70,7 +70,7 @@ function SidebarLink({
       ) : (
         <NavLink
           className={
-            pathname.includes(path)
+            pathname === path
               ? isIconMode
                 ? Styles.active_icon_mode
                 : Styles.inactive_icon_mode
@@ -93,7 +93,7 @@ function SidebarLink({
             key={i}
             onClick={() => setSubLinksState(true)}
             className={
-              pathname.includes(path)
+              pathname === path
                 ? isIconMode
                   ? Styles.active_icon_mode_sublink
                   : Styles.inactive_icon_mode_sublink
