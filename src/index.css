@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300&family=Poppins:wght@300&display=swap");
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./fonts/Gilroy-Light.otf') format('.otf');
+}
 :root {
   font-family: "Poppins", sans-serif;
 
@@ -13,7 +17,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter", sans-serif;
 }
 
 .my-container {
@@ -45,8 +48,3 @@
 }
 
 
-@font-face {
-  font-family: 'Gilroy';
-  src: url('./fonts/Gilroy-Light.otf') format('.otf');
-  /* Add other font formats if needed */
-}

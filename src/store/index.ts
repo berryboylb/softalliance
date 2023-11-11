@@ -6,7 +6,9 @@ import departmentReducer from "./reducers/department-reducer";
 import lookupReducer from "./reducers/lookup-reducer";
 import gradesReducer from "./reducers/grades-reducer";
 import suborganizationReducer from "./reducers/suborganization-reducer";
-
+import payrun from "./reducers/payrun";
+import category from "./reducers/category";
+import classification from "./reducers/classification";
 
 const store = configureStore({
   reducer: {
@@ -16,7 +18,10 @@ const store = configureStore({
     department: departmentReducer,
     lookup: lookupReducer,
     grades: gradesReducer,
-    suborganization: suborganizationReducer
+    suborganization: suborganizationReducer,
+    payrun,
+    category,
+    classification,
   },
 });
 
