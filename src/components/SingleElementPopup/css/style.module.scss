@@ -1,0 +1,59 @@
+.backdrop {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .5);
+    overflow-y: auto;
+
+}
+
+.bg_ {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+._cancel {
+    color: rgba(224, 84, 83, 1);
+    border: 1px solid rgba(224, 84, 83, 1);
+    background: none;
+    padding: .3rem .4rem;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        opacity: .8;
+    }
+}
+
+.title {
+    font-size: 1rem;
+    text-transform: capitalize;
+    color: #2D416F;
+    font-weight: 700;
+    margin: 1rem 0;
+
+}
+
+
+@media screen and (min-width: 1024px) {
+    .backdrop {
+        place-items: end;
+    }
+
+        .title {
+            font-size: 1.5rem;
+        }
+
+    .bg_ {
+        width: 50%;
+    }
+}

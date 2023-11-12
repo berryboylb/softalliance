@@ -9,7 +9,6 @@ import { SubOrganization } from "../../store/reducers/subOrganization";
 import { LookupValues } from "../../store/reducers/category";
 import useFetchData from "./useFetchData";
 import axios from "axios";
-import toast from "react-hot-toast";
 import { baseUrl } from "../../constants";
 type Props = {
   dataArr: any[];
@@ -18,6 +17,7 @@ type Props = {
     accessor: string;
   }[];
   toggle: () => void;
+  handleLinkChange: (val: string | null) => void;
 };
 
 export const getById = async (subId: string, depId: string) => {
@@ -25,18 +25,22 @@ export const getById = async (subId: string, depId: string) => {
     const res = await axios.get(
       `${baseUrl}/suborganizations/${subId}/departments/${depId}`
     );
-    toast.success(res.data.message);
     return res.data.data.name;
   } catch (err) {
     if (err instanceof Error) {
-      toast.error(err.message);
+      console.log(err.message);
     } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      err.response.data.message.map((err: string) => toast.error(err));
+      console.log(err.response.data);
       return err.response.data.message;
     }
   }
 };
-const Index: React.FC<Props> = ({ dataArr, columnsArr, toggle }) => {
+const Index: React.FC<Props> = ({
+  dataArr,
+  columnsArr,
+  toggle,
+  handleLinkChange,
+}) => {
   const [datas, setDatas] = useState(dataArr);
   useEffect(() => {
     const fetchData = async () => {
@@ -128,7 +132,13 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr, toggle }) => {
                     );
                   })}
                   <td className={Style.action}>
-                    <button className={Styles.details} onClick={toggle}>
+                    <button
+                      className={Styles.details}
+                      onClick={() => {
+                        toggle();
+                        handleLinkChange(data[Number(row.id)].id);
+                      }}
+                    >
                       view Details
                     </button>
                   </td>

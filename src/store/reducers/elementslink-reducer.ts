@@ -24,6 +24,7 @@ type ElementsLink = {
   effectiveEndDate: string;
   status: string;
   automate: string;
+  createdAt: string;
   additionalInfo: [
     {
       lookupId: number;
