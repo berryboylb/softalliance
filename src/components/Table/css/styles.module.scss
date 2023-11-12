@@ -1,7 +1,8 @@
 .table {
     position: relative;
-    overflow: auto;
+    overflow-x: auto;
     margin-top: 1rem;
+    
 
     .table_main {
         width: 100%;

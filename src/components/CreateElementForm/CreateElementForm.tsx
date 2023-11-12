@@ -6,7 +6,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import { monthsArray } from "../../constants";
 import useDataFetching from "./useFetchLookups";
-const CreateElementForm = () => {
+import { add } from "../../store/reducers/elements-reducer";
+import { useAppDispatch } from "../../store/hooks";
+import Spinner from "../Spinner/Spinner";
+const CreateElementForm = ({
+  toggle,
+  toggleSecond,
+}: {
+  toggle: () => void;
+  toggleSecond: () => void;
+}) => {
+  const dispatch = useAppDispatch();
   const { payrun, classification, category } = useDataFetching();
   const formSchema = z
     .object({
@@ -61,19 +71,25 @@ const CreateElementForm = () => {
     handleSubmit,
     setValue,
     trigger,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormSchmaType>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit: SubmitHandler<FormSchmaType> = async (data) => {
-    console.log({
-      ...data,
-      modifiedBy: "olorunfemi Daramola",
-      categoryId: 1,
-      classificationId: 2,
-      payRunId: 5,
-    });
+    dispatch(
+      add({
+        ...data,
+        modifiedBy: "olorunfemi Daramola",
+        categoryId: 1,
+        classificationId: 2,
+        payRunId: 5,
+      })
+    );
+    reset();
+    toggle();
+    toggleSecond();
   };
 
   const [checked, setChecked] = useState(false);
@@ -558,9 +574,19 @@ const CreateElementForm = () => {
             Back
           </button>
           {activeStep === steps.length - 1 ? (
-            <button className={Styles.normal_} type="submit">
-              Submit
-            </button>
+            <>
+              {isSubmitting ? (
+                <Spinner toggle={false} />
+              ) : (
+                <button
+                  className={Styles.normal_}
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Submit
+                </button>
+              )}
+            </>
           ) : (
             <div
               className={Styles.normal_}

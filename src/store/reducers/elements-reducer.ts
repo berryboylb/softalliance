@@ -22,8 +22,6 @@ type Elements = {
   payFrequency: string;
 };
 
-
-
 type InitialState = {
   loading: boolean;
   elements: Elements[] | null;
@@ -38,27 +36,40 @@ const initialState: InitialState = {
   error: [],
 };
 
-export const get = createAsyncThunk(
-  "elements/get",
-  async () => {
-    try {
-      const res = await axios.get(`${baseUrl}/elements`);
-      toast.success(res.data.message);
-      // console.log("res", res.data.data.content);
-      return res.data.data.content;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-        err.response.data.message.map((err: string) => toast.error(err));
-        return err.response.data.message;
-      }
+export const get = createAsyncThunk("elements/get", async () => {
+  try {
+    const res = await axios.get(`${baseUrl}/elements`);
+    toast.success(res.data.message);
+    // console.log("res", res.data.data.content);
+    return res.data.data.content;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
     }
   }
-);
+});
 
 type IElement = {
   name: string;
+  description: string;
+  payRunId: number;
+  payRunValueId: number;
+  classificationId: number;
+  classificationValueId: number;
+  categoryId: number;
+  categoryValueId: number;
+  reportingName: string;
+  processingType: string;
+  status: string;
+  prorate: string;
+  effectiveStartDate: string;
+  effectiveEndDate: string;
+  selectedMonths?: string[];
+  payFrequency: string;
+  modifiedBy?: string;
 };
 
 export const add = createAsyncThunk(
@@ -137,10 +148,7 @@ export const deleteOne = createAsyncThunk(
       headers: { "Content-Type": "application/json" },
     };
     try {
-      const res = await axios.delete(
-        `${baseUrl}/elements/${id}`,
-        config
-      );
+      const res = await axios.delete(`${baseUrl}/elements/${id}`, config);
       toast.success(res.data.message);
       return id;
     } catch (err) {
@@ -162,21 +170,22 @@ const ElementsSlice = createSlice({
     builder.addCase(add.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(add.fulfilled, (state) => {
+    builder.addCase(add.fulfilled, (state, action: PayloadAction<Elements>) => {
       state.loading = false;
+      state.elements =
+        state.elements && state.elements.length > 0
+          ? [...state.elements, action.payload]
+          : state.elements;
     });
-    builder.addCase(
-      add.rejected,
-      (state, action: PayloadAction<unknown>) => {
-        state.loading = false;
-        if (action?.payload) {
-          const error = action.payload as { message?: string[] | undefined };
-          state.error = error.message || ["Something went wrong"];
-        } else {
-          state.error = ["Something went wrong"];
-        }
+    builder.addCase(add.rejected, (state, action: PayloadAction<unknown>) => {
+      state.loading = false;
+      if (action?.payload) {
+        const error = action.payload as { message?: string[] | undefined };
+        state.error = error.message || ["Something went wrong"];
+      } else {
+        state.error = ["Something went wrong"];
       }
-    );
+    });
     builder.addCase(get.pending, (state) => {
       state.loading = true;
     });
@@ -187,18 +196,15 @@ const ElementsSlice = createSlice({
         state.elements = action.payload;
       }
     );
-    builder.addCase(
-      get.rejected,
-      (state, action: PayloadAction<unknown>) => {
-        state.loading = false;
-        if (action?.payload) {
-          const error = action.payload as { message?: string[] | undefined };
-          state.error = error.message || ["Something went wrong"];
-        } else {
-          state.error = ["Something went wrong"];
-        }
+    builder.addCase(get.rejected, (state, action: PayloadAction<unknown>) => {
+      state.loading = false;
+      if (action?.payload) {
+        const error = action.payload as { message?: string[] | undefined };
+        state.error = error.message || ["Something went wrong"];
+      } else {
+        state.error = ["Something went wrong"];
       }
-    );
+    });
     builder.addCase(getById.pending, (state) => {
       state.loading = true;
     });
@@ -250,9 +256,10 @@ const ElementsSlice = createSlice({
       deleteOne.fulfilled,
       (state, action: PayloadAction<Elements>) => {
         state.loading = false;
-        state.elements = state.elements?.filter(
-          (item) => item.categoryId !== Number(action.payload)
-        ) || [];
+        state.elements =
+          state.elements?.filter(
+            (item) => item.categoryId !== Number(action.payload)
+          ) || [];
       }
     );
     builder.addCase(
