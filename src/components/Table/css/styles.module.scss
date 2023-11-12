@@ -2,7 +2,7 @@
     position: relative;
     overflow-x: auto;
     margin-top: 1rem;
-    
+
 
     .table_main {
         width: 100%;
@@ -16,12 +16,12 @@
         }
 
         th {
-            // text-[#646C79] font-ubuntu text-sm lg: text-base px-6 py-3
             color: white;
-            font-family: "Gilroy", sans-serif;
+            font-family: "poppins", sans-serif;
             font-size: .875rem;
             padding: .875rem;
             text-transform: capitalize;
+            white-space: nowrap;
 
             .title_icon {
                 margin-left: .5rem;
@@ -33,12 +33,19 @@
 
 .tr_body {
     // overflow-hidden whitespace-nowrap h-[100px] rounded-[10px] bg-white font-ubuntu rounded-[10px] bg-white border-b dark: bg-gray-900 dark:border-gray-700 mb-5
-    overflow: hidden;
+    // overflow: hidden;
     white-space: nowrap;
     padding: .875rem;
     color: #2D416F;
-    height: 50px;
+    height: 70px;
     font-family: "poppins", sans-serif;
+    border-bottom: 1px solid rgba(205, 225, 227, 1);
+
+    td {
+        padding: .875rem;
+        text-transform: capitalize;
+        min-width: 100px;
+    }
 }
 
 .action {
@@ -51,13 +58,14 @@
 .bond {
     position: relative;
     width: 100%;
+    z-index: 999999999999999;
 
     .popup {
         width: 150px;
         position: absolute;
         z-index: 9999;
-        right: 0;
-        bottom: 1rem;
+        right: 70%;
+        top: 0rem;
         background: #fff;
         padding: .5rem;
         border-radius: 4px;
@@ -86,10 +94,19 @@
 
         }
 
-
-
-
     }
+}
+
+.pop__ {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 99;
+    height: 100vh;
 }
 
 .edit {
@@ -114,7 +131,11 @@
     color: #E05453;
     text-align: center;
 }
-
+.boss {
+    display: flex;
+        justify-content: center;
+        align-items: center;
+}
 
 .box {
     background: none;
@@ -123,8 +144,17 @@
     outline: none;
     cursor: pointer;
     font-size: .5rem;
-    padding: .5rem;
+    padding: .1rem .2rem;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status_{
+    padding: .3rem .6rem;
+    border-radius: 40px;
+    font-family: 'poppins';
 }
 
 @media screen and (min-width: 1024px) {

@@ -4,7 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../constants";
 
 
-type LookupValues = {
+export type LookupValues = {
   id: string;
   name: string;
   description: string;

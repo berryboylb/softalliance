@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any */
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useTable } from "react-table";
 import {
-  faArrowDownUpLock,
   faEllipsisH,
   faTrashCan,
   faPen,
@@ -12,6 +11,14 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Style from "./css/styles.module.css";
+import { Sort } from "../../assets";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { LookupValues } from "../../store/reducers/category";
+import { getClassification } from "../../store/reducers/classification";
+import { getCategory } from "../../store/reducers/category";
+import { tableBackgroundColors, tableStatusColors } from "../../constants";
+import { convertDateFormat } from "../../utils";
+import { useNavigate } from "react-router-dom";
 type Props = {
   dataArr: any[];
   columnsArr: {
@@ -20,6 +27,25 @@ type Props = {
   }[];
 };
 const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate()
+  const { category } = useAppSelector((state) => state.category);
+  const { classification } = useAppSelector((state) => state.classification);
+
+  useEffect(() => {
+    if (!category) dispatch(getCategory(1));
+  }, [dispatch, category]);
+
+  useEffect(() => {
+    if (!classification) dispatch(getClassification(2));
+  }, [dispatch, classification]);
+
+  const getName = (id: string, arr: Array<LookupValues>) => {
+    if (!arr || arr.length < 0) return "N/A";
+    const item = arr.find((item) => item.id === id);
+    if (!item) return "N/A";
+    return item.name;
+  };
   const data = React.useMemo(() => dataArr, []);
   const columns: any = React.useMemo(() => columnsArr, []);
   const [box, setBox] = React.useState(false);
@@ -31,6 +57,7 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
     useTable({ columns, data });
   return (
     <Suspense>
+      {box && <div onClick={toggleBox} className={Style.pop__}></div>}
       <div className={Style.table}>
         <table className={Style.table_main} {...getTableProps()}>
           <thead>
@@ -39,19 +66,13 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
                 {head.headers.map((column) => (
                   <th className="" {...column.getHeaderProps()}>
                     {column.render("Header")}
-                    <FontAwesomeIcon
-                      className={Style.title_icon}
-                      icon={faArrowDownUpLock}
-                    />
+                    <img className={Style.title_icon} src={Sort} alt={Sort} />
                   </th>
                 ))}
 
                 <th className="">
                   Action
-                  <FontAwesomeIcon
-                    className={Style.title_icon}
-                    icon={faArrowDownUpLock}
-                  />
+                  <img className={Style.title_icon} src={Sort} alt={Sort} />
                 </th>
               </tr>
             ))}
@@ -62,15 +83,6 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
               return (
                 <tr className={Style.tr_body} {...row.getRowProps()}>
                   {row.cells.map((cell) => {
-                    // let cellClassName = "";
-                    // if (cell.column.id === "status") {
-                    //   // Check the cell value and apply conditional styling
-                    //   if (cell.value === "active") {
-                    //     cellClassName = Style.activeCell; // Use CSS Modules class
-                    //   } else if (cell.value === "inactive") {
-                    //     cellClassName = Style.inactiveCell; // Use CSS Modules class
-                    //   }
-                    // }
                     return (
                       <td
                         {...cell.getCellProps()}
@@ -80,27 +92,67 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
                             : Style.inactiveCell
                         }`}
                       >
-                        {cell.render("Cell")}{" "}
+                        {cell.column.id === "categoryValueId" ? (
+                          getName(String(cell.value), category ? category : [])
+                        ) : (
+                          <>
+                            {cell.column.id === "classificationValueId" ? (
+                              getName(
+                                String(cell.value),
+                                classification ? classification : []
+                              )
+                            ) : (
+                              <>
+                                {cell.column.id === "status" ? (
+                                  <span
+                                    className={Style.status_}
+                                    style={{
+                                      background:
+                                        tableBackgroundColors[cell.value],
+                                      color: tableStatusColors[cell.value],
+                                    }}
+                                  >
+                                    {cell.value}
+                                  </span>
+                                ) : (
+                                  <>
+                                    {cell.column.id === "createdAt"
+                                      ? convertDateFormat(cell.value)
+                                      : cell.render("Cell")}
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
                       </td>
                     );
                   })}
                   <td className={Style.action}>
-                    <button
-                      onClick={() => {
-                        toggleBox();
-                        toggleCurrent(i);
-                      }}
-                      className={Style.box}
-                    >
-                      {" "}
-                      <FontAwesomeIcon className="mr-2" icon={faEllipsisH} />
-                    </button>
+                    <div className={Style.boss}>
+                      <button
+                        onClick={() => {
+                          toggleBox();
+                          toggleCurrent(i);
+                        }}
+                        className={Style.box}
+                      >
+                        {" "}
+                        <FontAwesomeIcon icon={faEllipsisH} />
+                      </button>
+                    </div>
+
                     <div className={Style.bond}>
                       {box && currentIndex === i && (
                         <div className={Style.popup}>
                           <button
                             style={{ color: "#2D416F" }}
-                            onClick={() => toggleCurrent(null)}
+                            onClick={() => {
+                              navigate(
+                                `/elements/element/element-links/${row.id}`
+                              );
+                              toggleCurrent(null)
+                            }}
                           >
                             {" "}
                             <FontAwesomeIcon

@@ -15,10 +15,11 @@
 }
 .table .table_main th {
   color: white;
-  font-family: "Gilroy", sans-serif;
+  font-family: "poppins", sans-serif;
   font-size: 0.875rem;
   padding: 0.875rem;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 .table .table_main th .title_icon {
   margin-left: 0.5rem;
@@ -26,12 +27,17 @@
 }
 
 .tr_body {
-  overflow: hidden;
   white-space: nowrap;
   padding: 0.875rem;
   color: #2D416F;
-  height: 50px;
+  height: 70px;
   font-family: "poppins", sans-serif;
+  border-bottom: 1px solid rgb(205, 225, 227);
+}
+.tr_body td {
+  padding: 0.875rem;
+  text-transform: capitalize;
+  min-width: 100px;
 }
 
 .action {
@@ -41,13 +47,14 @@
 .bond {
   position: relative;
   width: 100%;
+  z-index: 999999999999999;
 }
 .bond .popup {
   width: 150px;
   position: absolute;
   z-index: 9999;
-  right: 0;
-  bottom: 1rem;
+  right: 70%;
+  top: 0rem;
   background: #fff;
   padding: 0.5rem;
   border-radius: 4px;
@@ -72,6 +79,18 @@
   margin-right: 0.5rem;
 }
 
+.pop__ {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 99;
+  height: 100vh;
+}
+
 .edit {
   color: #2D416F;
 }
@@ -94,6 +113,12 @@
   text-align: center;
 }
 
+.boss {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .box {
   background: none;
   border: 1px solid #4BAA79;
@@ -101,8 +126,17 @@
   outline: none;
   cursor: pointer;
   font-size: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.1rem 0.2rem;
   border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status_ {
+  padding: 0.3rem 0.6rem;
+  border-radius: 40px;
+  font-family: "poppins";
 }
 
 @media screen and (min-width: 1024px) {

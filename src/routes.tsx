@@ -20,6 +20,11 @@ const routes: RouteObject[] = [
           {
             path: "/elements/element",
             element: <Element />,
+            children: [],
+          },
+          {
+            path: "/elements/element/element-links/:id",
+            element: <div>hi</div>,
           },
           {
             path: "/elements/balances",

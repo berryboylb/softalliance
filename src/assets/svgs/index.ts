@@ -1,3 +1,4 @@
 import Filter from './Filter.svg';
 import Success from './success.svg'
-export { Filter, Success };
+import Sort from './Sort.svg'
+export { Filter, Success, Sort };

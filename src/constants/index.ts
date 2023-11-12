@@ -138,3 +138,14 @@ export const monthsArray = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
+
+export const tableStatusColors: Record<string, string> = {
+  active: "rgba(75, 170, 121, 1)",
+  inactive: "#F15046",
+};
+
+
+export const tableBackgroundColors: Record<string, string> = {
+  active: "rgba(244, 250, 247, 1)",
+  inactive: "rgba(255, 154, 152, 0.3)",
+};
