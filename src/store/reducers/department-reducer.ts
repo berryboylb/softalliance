@@ -25,9 +25,9 @@ const initialState: InitialState = {
   error: [],
 };
 
-export const get = createAsyncThunk("department/get", async () => {
+export const get = createAsyncThunk("department/get", async (id: string) => {
   try {
-    const res = await axios.get(`${baseUrl}/suborganizations`);
+    const res = await axios.get(`${baseUrl}/suborganizations/${id}/departments`);
     toast.success(res.data.message);
     return res.data.data;
   } catch (err: unknown) {
@@ -40,9 +40,10 @@ export const get = createAsyncThunk("department/get", async () => {
   }
 });
 
-export const getById = createAsyncThunk("department/getById", async (id: string) => {
+type Val = { subId: string; depId: string };
+export const getById = createAsyncThunk("department/getById", async (val: Val) => {
   try {
-    const res = await axios.get(`${baseUrl}/suborganizations/${id}`);
+    const res = await axios.get(`${baseUrl}/suborganizations/${val.subId}/departments/${val.depId}`);
     toast.success(res.data.message);
     return res.data.data;
   } catch (err) {

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Styles from "./css/style.module.css";
 import { EmptyElement, Danger } from "../../assets";
-export default function EleemntsEmpty() {
+export default function EleemntsEmpty({ text }: { text: string }) {
   return (
     <Suspense>
       <div className={Styles.empty}>
@@ -12,7 +12,7 @@ export default function EleemntsEmpty() {
           <p>
             {" "}
             <img src={Danger} alt="Danger Icon" />
-            There are no elements to display
+           {text}
           </p>
         </div>
       </div>

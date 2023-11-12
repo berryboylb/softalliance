@@ -134,6 +134,14 @@ export const elementAccesor = [
   { Header: "Modified By", accessor: "modifiedBy" },
 ];
 
+export const elementLinkAccessor = [
+  { Header: "Name", accessor: "name" },
+  { Header: "Sub-Organization", accessor: "suborganizationId" },
+  { Header: "Department", accessor: "departmentId" },
+  { Header: "Employee Category", accessor: "employeeCategoryValueId" },
+  { Header: "amount", accessor: "amount" },
+];
+
 export const monthsArray = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'

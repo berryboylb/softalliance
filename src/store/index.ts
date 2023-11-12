@@ -9,6 +9,8 @@ import suborganizationReducer from "./reducers/suborganization-reducer";
 import payrun from "./reducers/payrun";
 import category from "./reducers/category";
 import classification from "./reducers/classification";
+import employeeCategory from "./reducers/employeeCategory";
+import subOrganization from "./reducers/subOrganization";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +24,8 @@ const store = configureStore({
     payrun,
     category,
     classification,
+    employeeCategory,
+    subOrganization,
   },
 });
 

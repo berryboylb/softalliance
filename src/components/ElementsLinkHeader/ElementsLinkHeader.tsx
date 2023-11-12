@@ -35,7 +35,7 @@ export default function ElementsLinkHeader({ toggle }: { toggle: () => void }) {
       <div className={Styles.element}>
         <div className={Styles.inner}>
           <LiveSearch
-            placeholder="Search for element"
+            placeholder="Search for element link"
             results={searchResults}
             onChange={handleChange}
             onSelect={(item: any) => {

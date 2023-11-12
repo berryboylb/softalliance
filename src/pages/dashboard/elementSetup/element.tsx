@@ -38,7 +38,7 @@ export default function Elements() {
       {!elements.loading && options && options.length > 0 ? (
         <Table columnsArr={elementAccesor} dataArr={options} />
       ) : (
-        <Empty />
+        <Empty text="There are no elements to display" />
       )}
       <Modal modalIsOpen={modalIsOpen} closeModal={toggle}>
         <Form toggle={toggle} toggleSecond={toggleSecond} />
@@ -48,7 +48,7 @@ export default function Elements() {
         <SuccessComp
           toggle={toggleSecond}
           img={Success}
-          message="Element has beencreated successfully"
+          message="Element has been created successfully"
         />
       </Modal>
     </Suspense>

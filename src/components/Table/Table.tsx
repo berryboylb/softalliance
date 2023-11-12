@@ -149,7 +149,7 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
                             style={{ color: "#2D416F" }}
                             onClick={() => {
                               navigate(
-                                `/elements/element/element-links/${
+                                `/elements/element/element-details/${
                                   data[Number(row.id)].id
                                 }`
                               );

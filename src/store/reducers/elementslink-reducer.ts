@@ -32,12 +32,18 @@ type ElementsLink = {
   ];
 };
 
+type Res = {
+  total: number;
+  content: ElementsLink[];
+};
+
 
 
 type InitialState = {
   loading: boolean;
   singleElementLink: ElementsLink | null;
   elementsLink: ElementsLink[] | null;
+  total: null | number;
   error: string[];
 };
 
@@ -45,6 +51,7 @@ const initialState: InitialState = {
   loading: false,
   singleElementLink: null,
   elementsLink: null,
+  total : null,
   error: [],
 };
 
@@ -54,6 +61,7 @@ export const get = createAsyncThunk(
     try {
       const res = await axios.get(`${baseUrl}/elements/${id}/elementlinks`);
       toast.success(res.data.message);
+      console.log(res.data.data)
       return res.data.data;
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -193,13 +201,11 @@ const ElementLinkSlice = createSlice({
     builder.addCase(get.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(
-      get.fulfilled,
-      (state, action: PayloadAction<ElementsLink[]>) => {
-        state.loading = false;
-        state.elementsLink = action.payload;
-      }
-    );
+    builder.addCase(get.fulfilled, (state, action: PayloadAction<Res>) => {
+      state.loading = false;
+      state.elementsLink = action.payload.content;
+      state.total = action.payload.total;
+    });
     builder.addCase(get.rejected, (state, action: PayloadAction<unknown>) => {
       state.loading = false;
       if (action?.payload) {

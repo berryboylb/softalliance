@@ -1,0 +1,36 @@
+.details {
+    color: rgba(75, 170, 121, 1);
+    text-decoration: underline;
+    background: none;
+    border: none;
+    outline: none;
+    text-transform: capitalize;
+    font-family: 'poppins';
+    cursor: pointer;
+
+    &:hover {
+        opacity: .8;
+    }
+}
+
+.actions_ {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .1rem;
+
+    button {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+
+        img{
+            width: 1.5rem;
+           height: 1.5rem;
+           object-fit: contain;
+        }
+        &:hover {
+                opacity: .8;
+            }
+    }
+}
