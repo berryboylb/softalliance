@@ -1,0 +1,52 @@
+.taby {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0rem;
+}
+
+.left {
+    padding-left: 1rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-left: 1px solid rgba(212, 216, 226, 1);
+    border-top: 1px solid rgba(212, 216, 226, 1);
+}
+
+.right {
+    padding-left: 1rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-left: 1px solid rgba(212, 216, 226, 1);
+    border-right: 1px solid rgba(212, 216, 226, 1);
+    border-top: 1px solid rgba(212, 216, 226, 1);
+}
+
+.fix {
+    border-bottom: 1px solid rgba(212, 216, 226, 1);
+}
+
+.label {
+    color: rgba(126, 126, 126, 1);
+    text-transform: uppercase;
+    font-size: .6rem;
+}
+
+.para {
+    color:  rgba(45, 65, 111, 1);
+    font-size: .75rem;
+    text-transform: capitalize;
+}
+
+@media screen and (min-width: 1024px) {
+    .taby{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .label {
+        font-size: .68rem;
+    }
+
+    .para {
+        font-size: .875rem;
+    }
+}

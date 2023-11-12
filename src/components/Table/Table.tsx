@@ -149,12 +149,13 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
                             style={{ color: "#2D416F" }}
                             onClick={() => {
                               navigate(
-                                `/elements/element/element-links/${row.id}`
+                                `/elements/element/element-links/${
+                                  data[Number(row.id)].id
+                                }`
                               );
-                              toggleCurrent(null)
+                              toggleCurrent(null);
                             }}
                           >
-                            {" "}
                             <FontAwesomeIcon
                               className={`${Style.con} ${Style.edit}`}
                               icon={faEye}

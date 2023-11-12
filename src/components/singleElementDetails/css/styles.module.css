@@ -1,0 +1,50 @@
+.taby {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0rem;
+}
+
+.left {
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-left: 1px solid rgb(212, 216, 226);
+  border-top: 1px solid rgb(212, 216, 226);
+}
+
+.right {
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-left: 1px solid rgb(212, 216, 226);
+  border-right: 1px solid rgb(212, 216, 226);
+  border-top: 1px solid rgb(212, 216, 226);
+}
+
+.fix {
+  border-bottom: 1px solid rgb(212, 216, 226);
+}
+
+.label {
+  color: rgb(126, 126, 126);
+  text-transform: uppercase;
+  font-size: 0.6rem;
+}
+
+.para {
+  color: rgb(45, 65, 111);
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+@media screen and (min-width: 1024px) {
+  .taby {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .label {
+    font-size: 0.68rem;
+  }
+  .para {
+    font-size: 0.875rem;
+  }
+}/*# sourceMappingURL=styles.module.css.map */

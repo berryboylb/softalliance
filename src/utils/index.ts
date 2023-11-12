@@ -14,3 +14,15 @@ export function convertDateFormat(inputDate: string): string {
 
   return `${formattedDate} || ${formattedTime}`;
 }
+
+export function convertDateFormatOnly(inputDate: string): string {
+  const dateObject = new Date(inputDate);
+
+  // Format the date as "DD - MM - YYYY"
+  const formattedDate = `${dateObject.getDate()} - ${
+    dateObject.getMonth() + 1
+  } - ${dateObject.getFullYear()}`;
+
+  return `${formattedDate}`;
+}
+

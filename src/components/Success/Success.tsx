@@ -1,12 +1,18 @@
-import React from "react";
-import { Success } from "../../assets";
 import Styles from "./css/style.module.css"
-const SuccessComp = () => {
+const SuccessComp = ({
+  message,
+  img,
+  toggle,
+}: {
+  message: string;
+  img: string;
+  toggle: () => void;
+}) => {
   return (
     <div className={Styles.con}>
-      <img src={Success} alt={Success} />
-      <h1>Element has been created successfully</h1>
-      <button>Close to continue</button>
+      <img src={img} alt={img} />
+      <h1>{message}</h1>
+      <button onClick={toggle}>Close to continue</button>
     </div>
   );
 };

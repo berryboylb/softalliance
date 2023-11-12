@@ -1,4 +1,5 @@
 import { lazy } from "react";
 const DashBoard = lazy(() => import("./dashboard"));
 const Element = lazy(() => import("./dashboard/elementSetup/element"));
-export { DashBoard, Element };
+const SingleElement = lazy(() => import("./dashboard/elementSetup/single-element"));
+export { DashBoard, Element, SingleElement };

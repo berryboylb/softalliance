@@ -1,5 +1,5 @@
 import { RouteObject } from "react-router-dom";
-import { DashBoard, Element } from "./pages";
+import { DashBoard, Element, SingleElement } from "./pages";
 import NotFound from "./components/NotFound/NotFound";
 import { DashboardLayout } from "./layouts";
 
@@ -23,8 +23,8 @@ const routes: RouteObject[] = [
             children: [],
           },
           {
-            path: "/elements/element/element-links/:id",
-            element: <div>hi</div>,
+            path: "/elements/element/element-details/:id",
+            element: <SingleElement />,
           },
           {
             path: "/elements/balances",

@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { get } from "../../../store/reducers/elements-reducer";
 import { getLoop } from "../../../store/reducers/lookup-reducer";
 import { elementAccesor } from "../../../constants";
+import { Success } from "../../../assets";
 const EleemntsHeader = lazy(
   () => import("../../../components/ElementsHeader/ElementsHeader")
 );
@@ -44,7 +45,11 @@ export default function Elements() {
       </Modal>
 
       <Modal modalIsOpen={secondModalIsOpen} closeModal={toggleSecond}>
-        <SuccessComp />
+        <SuccessComp
+          toggle={toggleSecond}
+          img={Success}
+          message="Element has beencreated successfully"
+        />
       </Modal>
     </Suspense>
   );
