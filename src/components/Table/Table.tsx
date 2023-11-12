@@ -25,10 +25,21 @@ type Props = {
     Header: string;
     accessor: string;
   }[];
+  toggle: () => void;
+  handleLinkChange: (val: string | null) => void;
+  box: boolean;
+  toggleBox: () => void;
 };
-const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
+const Index: React.FC<Props> = ({
+  dataArr,
+  columnsArr,
+  toggle,
+  handleLinkChange,
+  box,
+  toggleBox,
+}) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { category } = useAppSelector((state) => state.category);
   const { classification } = useAppSelector((state) => state.classification);
 
@@ -48,9 +59,7 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
   };
   const data = React.useMemo(() => dataArr, []);
   const columns: any = React.useMemo(() => columnsArr, []);
-  const [box, setBox] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState<null | number>(null);
-  const toggleBox = () => setBox((K) => !K);
   const toggleCurrent = (thing: number | null) => setCurrentIndex(thing);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -175,7 +184,11 @@ const Index: React.FC<Props> = ({ dataArr, columnsArr }) => {
                           </button>
                           <button
                             style={{ color: "#E05453" }}
-                            onClick={() => toggleCurrent(null)}
+                            onClick={() => {
+                              toggleCurrent(null);
+                              toggle();
+                              handleLinkChange(data[Number(row.id)].id);
+                            }}
                           >
                             {" "}
                             <FontAwesomeIcon

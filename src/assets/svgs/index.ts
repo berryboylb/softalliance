@@ -3,4 +3,6 @@ import Success from './success.svg'
 import Sort from './Sort.svg'
 import Bin from './bin.svg';
 import Pen from './rename.svg'
-export { Filter, Success, Sort, Bin, Pen };
+import BigBin from './bigbin.svg'
+import RedCheck from './redcheck.svg'
+export { Filter, Success, Sort, Bin, Pen, BigBin, RedCheck };

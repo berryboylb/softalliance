@@ -1,9 +1,9 @@
 import { Suspense, lazy, useEffect, useState, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-import { get } from "../../../store/reducers/elements-reducer";
+import { get, deleteOne } from "../../../store/reducers/elements-reducer";
 import { getLoop } from "../../../store/reducers/lookup-reducer";
 import { elementAccesor } from "../../../constants";
-import { Success } from "../../../assets";
+import { BigBin, RedCheck, Success } from "../../../assets";
 const EleemntsHeader = lazy(
   () => import("../../../components/ElementsHeader/ElementsHeader")
 );
@@ -18,16 +18,41 @@ const Form = lazy(
 );
 const SuccessComp = lazy(() => import("../../../components/Success/Success"));
 
+const DeleteComp = lazy(() => import("../../../components/Delete/Delete"));
+
 export default function Elements() {
   const dispatch = useAppDispatch();
   const elements = useAppSelector((state) => state.elements);
-  const options = useMemo(() =>  elements.elements &&
-      elements.elements.length > 0 && elements.elements, [elements.elements]);
+  const options = useMemo(
+    () =>
+      elements.elements && elements.elements.length > 0 && elements.elements,
+    [elements.elements]
+  );
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [secondModalIsOpen, secondSetIsOpen] = useState<boolean>(false);
   const toggleSecond = () => secondSetIsOpen((k) => !k);
   const toggle = () => setIsOpen((k) => !k);
-  // const lookups = useAppSelector((state) => state.lookup);
+
+  const [modalDelete, setModalDelete] = useState<boolean>(false);
+  const toggleDelete = () => setModalDelete((k) => !k);
+
+  //delete successfull
+  const [modalSuccesfulDelete, setSuccesfulModalDelete] =
+    useState<boolean>(false);
+  const toggleSuccesfulDelete = () => setSuccesfulModalDelete((k) => !k);
+
+  //edit succesful
+  const [modalSuccesfulEdit, setModalSuccesfulEdit] = useState<boolean>(true);
+  const toggleSuccesfulEdit = () => setModalSuccesfulEdit((k) => !k);
+
+  const [linkId, setLinkId] = useState<null | string>(null);
+
+  const handleLinkChange = (val: null | string) => {
+    setLinkId(val);
+  };
+
+  const [box, setBox] = useState(false);
+  const toggleBox = () => setBox((K) => !K);
   useEffect(() => {
     dispatch(get());
     dispatch(getLoop());
@@ -36,7 +61,14 @@ export default function Elements() {
     <Suspense>
       <EleemntsHeader toggle={toggle} />
       {!elements.loading && options && options.length > 0 ? (
-        <Table columnsArr={elementAccesor} dataArr={options} />
+        <Table
+          columnsArr={elementAccesor}
+          dataArr={options}
+          toggle={toggleDelete}
+          handleLinkChange={handleLinkChange}
+          box={box}
+          toggleBox={toggleBox}
+        />
       ) : (
         <Empty text="There are no elements to display" />
       )}
@@ -49,6 +81,48 @@ export default function Elements() {
           toggle={toggleSecond}
           img={Success}
           message="Element has been created successfully"
+        />
+      </Modal>
+
+      {/* {linkId && linkId} */}
+      {modalDelete && (
+        <DeleteComp
+          toggle={() => {
+            toggleDelete();
+            toggleBox();
+          }}
+          img={BigBin}
+          message="Are you sure you want to delete Element?"
+          minitext="You can’t reverse this action"
+          destroy={() => {
+            if (linkId) {
+              dispatch(deleteOne(linkId));
+              toggleDelete();
+              toggleSuccesfulDelete();
+            }
+          }}
+          handleLinkChange={handleLinkChange}
+        />
+      )}
+
+      {/* delete successful */}
+      <Modal
+        modalIsOpen={modalSuccesfulDelete}
+        closeModal={toggleSuccesfulDelete}
+      >
+        <SuccessComp
+          toggle={toggleSuccesfulDelete}
+          img={RedCheck}
+          message="Element has been deleted successfully"
+        />
+      </Modal>
+
+      {/* edit successful */}
+      <Modal modalIsOpen={modalSuccesfulEdit} closeModal={toggleSuccesfulEdit}>
+        <SuccessComp
+          toggle={toggleSuccesfulEdit}
+          img={Success}
+          message="Element has been updated successfully"
         />
       </Modal>
     </Suspense>

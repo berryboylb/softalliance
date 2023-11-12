@@ -4,6 +4,7 @@ import axios from "axios";
 import { baseUrl } from "../../constants";
 
 type Elements = {
+  id: string;
   name: string;
   description: string;
   payRunId: number;
@@ -258,7 +259,7 @@ const ElementsSlice = createSlice({
         state.loading = false;
         state.elements =
           state.elements?.filter(
-            (item) => item.categoryId !== Number(action.payload)
+            (item) => Number(item.id) !== Number(action.payload)
           ) || [];
       }
     );
