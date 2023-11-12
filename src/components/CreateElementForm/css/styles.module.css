@@ -311,7 +311,8 @@
   gap: 1rem;
   margin-top: 1rem;
 }
-.btn__ button, .btn__ div {
+.btn__ button,
+.btn__ div {
   padding: 1rem;
   border-radius: 4px;
   font-family: "poppins";
@@ -319,7 +320,8 @@
   outline: none;
   cursor: pointer;
 }
-.btn__ button:hover, .btn__ div:hover {
+.btn__ button:hover,
+.btn__ div:hover {
   opacity: 0.8;
 }
 .btn__ .back {
@@ -335,6 +337,10 @@
   align-items: center;
 }
 
+.highlight {
+  border: 1px solid rgb(224, 84, 83);
+}
+
 .error {
   background: rgb(253, 246, 246);
   color: rgb(224, 84, 83);
@@ -342,6 +348,13 @@
   padding: 0.5rem;
   border-radius: 4px;
   margin-top: 0.5rem;
+}
+
+.monthy_ {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 @media screen and (min-width: 1024px) {
@@ -369,5 +382,8 @@
   .input,
   .status {
     font-size: 1rem;
+  }
+  .monthy_ {
+    grid-template-columns: repeat(5, 1fr);
   }
 }/*# sourceMappingURL=styles.module.css.map */

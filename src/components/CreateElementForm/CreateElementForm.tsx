@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Styles from "./css/styles.module.css";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -18,6 +18,7 @@ const CreateElementForm = ({
 }) => {
   const dispatch = useAppDispatch();
   const { payrun, classification, category } = useDataFetching();
+
   const formSchema = z
     .object({
       name: z.string().min(3),
@@ -63,6 +64,15 @@ const CreateElementForm = ({
         message: "End Date must be after start date",
         path: ["effectiveEndDate"],
       }
+    )
+    .refine(
+      (data) => {
+        return data.payFrequency === "selectedMonths" && !!data.selectedMonths;
+      },
+      {
+        message: "Please add selected months",
+        path: ["selectedMonths"],
+      }
     );
   type FormSchmaType = z.infer<typeof formSchema>;
 
@@ -72,10 +82,28 @@ const CreateElementForm = ({
     setValue,
     trigger,
     reset,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<FormSchmaType>({
     resolver: zodResolver(formSchema),
   });
+
+  const [months, setMonths] = useState<string[]>([]);
+  const handleMonths = (val: string) => {
+    if (months.includes(val)) {
+      setMonths((prev) => {
+        const newValue = prev.filter((item) => item !== val);
+        setValue("selectedMonths", newValue);
+        return newValue;
+      });
+    } else {
+      setMonths((prev) => {
+        const newValue = [...prev, val];
+        setValue("selectedMonths", newValue);
+        return newValue;
+      });
+    }
+  };
 
   const onSubmit: SubmitHandler<FormSchmaType> = async (data) => {
     dispatch(
@@ -102,6 +130,20 @@ const CreateElementForm = ({
       }
       return !k;
     });
+  
+  const currentClassificationId = watch("classificationValueId");
+
+  const filteredCategory = useMemo(() => {
+    if (currentClassificationId === 7) {
+      return category && category.filter((item) => item.name.toLowerCase().includes('deduction'));
+    }
+
+    if (currentClassificationId === 8) {
+      return category && category.filter((item) => item.name.toLowerCase().includes('earning'));
+    }
+
+    return category;
+  }, [category, currentClassificationId]);
   const step1 = (
     <>
       <div className={Styles.con}>
@@ -110,7 +152,9 @@ const CreateElementForm = ({
             Name
           </label>
           <input
-            className={Styles.input}
+            className={`${Styles.input} ${
+              errors.name && errors.name.message && Styles.highlight
+            }`}
             aria-label="name"
             placeholder="Input Name"
             type="text"
@@ -131,7 +175,11 @@ const CreateElementForm = ({
           </label>
           <select
             placeholder="Select Classification"
-            className={Styles.select}
+            className={`${Styles.select} ${
+              errors.classificationValueId &&
+              errors.classificationValueId.message &&
+              Styles.highlight
+            }`}
             id="classification"
             {...register("classificationValueId", {
               required: "This is required.",
@@ -161,7 +209,11 @@ const CreateElementForm = ({
           </label>
           <select
             placeholder="Select Element Category"
-            className={Styles.select}
+            className={`${Styles.select} ${
+              errors.categoryValueId &&
+              errors.categoryValueId.message &&
+              Styles.highlight
+            }`}
             id="category"
             {...register("categoryValueId", {
               required: "This is required.",
@@ -169,9 +221,9 @@ const CreateElementForm = ({
             })}
           >
             <option value="">Select Element Category</option>
-            {category &&
-              category.length > 0 &&
-              category.map((item) => (
+            {filteredCategory &&
+              filteredCategory.length > 0 &&
+              filteredCategory.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
@@ -189,7 +241,11 @@ const CreateElementForm = ({
             Payrun
           </label>
           <select
-            className={Styles.select}
+            className={`${Styles.select} ${
+              errors.payRunValueId &&
+              errors.payRunValueId.message &&
+              Styles.highlight
+            }`}
             id="Payrun"
             placeholder="Select Payrun"
             {...register("payRunValueId", {
@@ -220,7 +276,9 @@ const CreateElementForm = ({
         <textarea
           id="description"
           placeholder="Input Description"
-          className={Styles.text}
+          className={`${Styles.text} ${
+            errors.description && errors.description.message && Styles.highlight
+          }`}
           {...register("description", {
             required: "This is required.",
           })}
@@ -240,7 +298,11 @@ const CreateElementForm = ({
         <textarea
           id="reportingName"
           placeholder="Input Reporting Name"
-          className={Styles.text}
+          className={`${Styles.text} ${
+            errors.reportingName &&
+            errors.reportingName.message &&
+            Styles.highlight
+          }`}
           {...register("reportingName", {
             required: "This is required.",
           })}
@@ -284,7 +346,11 @@ const CreateElementForm = ({
             Effective End Date
           </label>
           <input
-            className={Styles.input}
+            className={`${Styles.input} ${
+              errors.effectiveEndDate &&
+              errors.effectiveEndDate.message &&
+              Styles.highlight
+            }`}
             aria-label="effectiveEndDate"
             placeholder="Input Name"
             type="date"
@@ -306,7 +372,13 @@ const CreateElementForm = ({
           <label htmlFor="effectiveStartDate" className={Styles.label}>
             Processing Type
           </label>
-          <div className={Styles.pan}>
+          <div
+            className={`${Styles.pan} ${
+              errors.processingType &&
+              errors.processingType.message &&
+              Styles.highlight
+            }`}
+          >
             <label>
               <span>Open</span>
 
@@ -342,7 +414,13 @@ const CreateElementForm = ({
           <label htmlFor="payFrequency" className={Styles.label}>
             Pay Frequency
           </label>
-          <div className={Styles.pan}>
+          <div
+            className={`${Styles.pan} ${
+              errors.payFrequency &&
+              errors.payFrequency.message &&
+              Styles.highlight
+            }`}
+          >
             <label>
               <span>Monthly</span>
 
@@ -378,18 +456,30 @@ const CreateElementForm = ({
       </div>
 
       {
-        <div className={Styles.months}>
+        <div className={`${Styles.months} `}>
           <label htmlFor="payFrequency" className={Styles.label}>
             Selected Pay Months
           </label>
-          <select name="selectedMonth">
-            <option value="">Select </option>
-            {monthsArray.map((month, index) => (
-              <option key={index} value={month}>
-                {month}
-              </option>
+
+          <div
+            className={`${Styles.monthy_} ${
+              errors.selectedMonths &&
+              errors.selectedMonths.message &&
+              Styles.highlight
+            }`}
+          >
+            {monthsArray.map((item) => (
+              <label className={Styles.label} key={item}>
+                <input
+                  type="checkbox"
+                  name={item}
+                  onChange={() => handleMonths(item)}
+                  checked={months.includes(item) ? true : false}
+                />{" "}
+                {item}
+              </label>
             ))}
-          </select>
+          </div>
 
           <ErrorMessage
             errors={errors}
@@ -400,11 +490,15 @@ const CreateElementForm = ({
       }
 
       <div className={Styles.con}>
-        <div className={Styles.item}>
+        <div className={`${Styles.item} `}>
           <label htmlFor="prorate" className={Styles.label}>
             Prorate
           </label>
-          <div className={Styles.pan}>
+          <div
+            className={`${Styles.pan_} ${
+              errors.status && errors.status.message && Styles.highlight
+            }`}
+          >
             <label>
               <span>Yes</span>
 
@@ -436,11 +530,15 @@ const CreateElementForm = ({
           />
         </div>
 
-        <div className={Styles.item}>
+        <div className={`${Styles.item} }`}>
           <label htmlFor="status" className={Styles.label}>
             Status
           </label>
-          <div className={Styles.pan_}>
+          <div
+            className={`${Styles.pan_} ${
+              errors.status && errors.status.message && Styles.highlight
+            }`}
+          >
             <label
               className={`${Styles.switch} ${
                 checked ? Styles.active_switch : ""

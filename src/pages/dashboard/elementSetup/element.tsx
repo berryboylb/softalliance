@@ -20,6 +20,8 @@ const SuccessComp = lazy(() => import("../../../components/Success/Success"));
 
 const DeleteComp = lazy(() => import("../../../components/Delete/Delete"));
 
+const EditForm = lazy(() => import("../../../components/EditElementsForm/EditElementForm"));
+
 export default function Elements() {
   const dispatch = useAppDispatch();
   const elements = useAppSelector((state) => state.elements);
@@ -42,8 +44,12 @@ export default function Elements() {
   const toggleSuccesfulDelete = () => setSuccesfulModalDelete((k) => !k);
 
   //edit succesful
-  const [modalSuccesfulEdit, setModalSuccesfulEdit] = useState<boolean>(true);
+  const [modalSuccesfulEdit, setModalSuccesfulEdit] = useState<boolean>(false);
   const toggleSuccesfulEdit = () => setModalSuccesfulEdit((k) => !k);
+
+  //edit form
+  const [modalEdit, setModaldit] = useState<boolean>(false);
+  const toggleEdit = () => setModaldit((k) => !k);
 
   const [linkId, setLinkId] = useState<null | string>(null);
 
@@ -68,6 +74,7 @@ export default function Elements() {
           handleLinkChange={handleLinkChange}
           box={box}
           toggleBox={toggleBox}
+          toggleEdit={toggleEdit}
         />
       ) : (
         <Empty text="There are no elements to display" />
@@ -124,6 +131,11 @@ export default function Elements() {
           img={Success}
           message="Element has been updated successfully"
         />
+      </Modal>
+
+      {/* edit  */}
+      <Modal modalIsOpen={modalEdit} closeModal={toggleEdit}>
+        <EditForm />
       </Modal>
     </Suspense>
   );

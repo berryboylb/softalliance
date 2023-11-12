@@ -48,9 +48,10 @@ export const getById = createAsyncThunk("department/getById", async (val: Val) =
     return res.data.data;
   } catch (err) {
     if (err instanceof Error) {
+      console.log(err.message);
       toast.error(err.message);
     } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      err.response.data.message.map((err: string) => toast.error(err));
+      console.log(err.response.data);
       return err.response.data.message;
     }
   }

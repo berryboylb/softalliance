@@ -29,6 +29,7 @@ type Props = {
   handleLinkChange: (val: string | null) => void;
   box: boolean;
   toggleBox: () => void;
+  toggleEdit: () => void;
 };
 const Index: React.FC<Props> = ({
   dataArr,
@@ -37,6 +38,7 @@ const Index: React.FC<Props> = ({
   handleLinkChange,
   box,
   toggleBox,
+  toggleEdit,
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -173,7 +175,12 @@ const Index: React.FC<Props> = ({
                           </button>
                           <button
                             style={{ color: "#2D416F" }}
-                            onClick={() => toggleCurrent(null)}
+                            onClick={() => {
+                              toggleCurrent(null);
+                              handleLinkChange(data[Number(row.id)].id);
+                              toggleBox();
+                              toggleEdit();
+                            }}
                           >
                             {" "}
                             <FontAwesomeIcon

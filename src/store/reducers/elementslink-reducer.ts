@@ -65,12 +65,13 @@ export const get = createAsyncThunk(
       console.log(res.data.data)
       return res.data.data;
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-        err.response.data.message.map((err: string) => toast.error(err));
-        return err.response.data.message;
-      }
+       if (err instanceof Error) {
+         console.log(err.message);
+         toast.error(err.message);
+       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+         console.log(err.response.data);
+         return err.response.data.message;
+       }
     }
   }
 );
@@ -94,12 +95,13 @@ export const add = createAsyncThunk("elementLink/add", async (values: IElement) 
     toast.success(res.data.message);
     return res.data.data;
   } catch (err) {
-    if (err instanceof Error) {
-      toast.error(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      err.response.data.message.map((err: string) => toast.error(err));
-      return err.response.data.message;
-    }
+     if (err instanceof Error) {
+       console.log(err.message);
+       toast.error(err.message);
+     } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+       console.log(err.response.data);
+       return err.response.data.message;
+     }
   }
 });
 
@@ -118,12 +120,13 @@ export const getById = createAsyncThunk(
       toast.success(res.data.message);
       return res.data.data;
     } catch (err) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-        err.response.data.message.map((err: string) => toast.error(err));
-        return err.response.data.message;
-      }
+       if (err instanceof Error) {
+         console.log(err.message);
+         toast.error(err.message);
+       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+         console.log(err.response.data);
+         return err.response.data.message;
+       }
     }
   }
 );
@@ -148,12 +151,13 @@ export const update = createAsyncThunk(
       toast.success(res.data.message);
       // return res.data;
     } catch (err) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-        err.response.data.message.map((err: string) => toast.error(err));
-        return err.response.data.message;
-      }
+       if (err instanceof Error) {
+         console.log(err.message);
+         toast.error(err.message);
+       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+         console.log(err.response.data);
+         return err.response.data.message;
+       }
     }
   }
 );
@@ -169,12 +173,13 @@ export const deleteOne = createAsyncThunk(
       toast.success(res.data.message);
       return values.id;
     } catch (err) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-        err.response.data.message.map((err: string) => toast.error(err));
-        return err.response.data.message;
-      }
+       if (err instanceof Error) {
+         console.log(err.message);
+         toast.error(err.message);
+       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+         console.log(err.response.data);
+         return err.response.data.message;
+       }
     }
   }
 );
