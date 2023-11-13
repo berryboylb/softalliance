@@ -118,6 +118,7 @@ export const getById = createAsyncThunk(
 
 type Update = {
   id: string;
+  body: IElement;
 };
 export const update = createAsyncThunk(
   "elements/update",
@@ -125,7 +126,7 @@ export const update = createAsyncThunk(
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    const body = JSON.stringify(values);
+    const body = JSON.stringify(values.body);
     try {
       const res = await axios.put(
         `${baseUrl}/elements/${values.id}`,
@@ -133,7 +134,8 @@ export const update = createAsyncThunk(
         config
       );
       toast.success(res.data.message);
-      // return res.data;
+      console.log(res.data.data);
+      return res.data.data;
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message);
@@ -156,13 +158,13 @@ export const deleteOne = createAsyncThunk(
       toast.success(res.data.message);
       return id;
     } catch (err) {
-       if (err instanceof Error) {
-         console.log(err.message);
-         toast.error(err.message);
-       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-         console.log(err.response.data);
-         return err.response.data.message;
-       }
+      if (err instanceof Error) {
+        console.log(err.message);
+        toast.error(err.message);
+      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+        console.log(err.response.data);
+        return err.response.data.message;
+      }
     }
   }
 );
@@ -239,7 +241,14 @@ const ElementsSlice = createSlice({
       update.fulfilled,
       (state, action: PayloadAction<Elements>) => {
         state.loading = false;
-        state.singleElement = action.payload;
+        const newArr = state.elements
+          ? state.elements.map((item) =>
+              String(item.id) === String(action.payload.id)
+                ? { ...action.payload }
+                : item
+            )
+          : [];
+        state.elements = newArr;
       }
     );
     builder.addCase(

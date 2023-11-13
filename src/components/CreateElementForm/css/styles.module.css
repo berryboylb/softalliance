@@ -140,6 +140,9 @@
 .item {
   width: 100%;
 }
+.item label {
+  margin-right: 0.5rem;
+}
 
 .label {
   display: block;
@@ -247,6 +250,22 @@
 }
 .months select::placeholder {
   color: rgb(129, 141, 169);
+}
+.months .brom_ {
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  font-family: "poppins";
+  font-size: 0.875rem;
+  color: rgb(129, 141, 169);
+  background: rgb(225, 225, 225);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .switch {
@@ -357,6 +376,53 @@
   margin-top: 1rem;
 }
 
+.selected_ {
+  border: 1px solid rgb(229, 229, 229);
+  margin-top: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 4px;
+}
+.selected_ ul {
+  width: 80%;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+}
+.selected_ ul li {
+  background: rgb(231, 231, 231);
+  color: rgb(45, 65, 111);
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  text-transform: capitalize;
+}
+.selected_ ul li ._icon_ {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+.selected_ ul li ._icon_:hover {
+  color: rgb(224, 84, 83);
+}
+.selected_ div button {
+  border: none;
+  background: none;
+  color: rgb(129, 141, 169);
+  font-size: 0.6rem;
+  cursor: pointer;
+  outline: none;
+}
+.selected_ div .toggle {
+  border-left: 1px solid rgb(129, 141, 169);
+  padding-left: 0.5rem;
+  margin-left: 0.5rem;
+}
+
 @media screen and (min-width: 1024px) {
   .title {
     font-size: 1.5rem;
@@ -385,5 +451,11 @@
   }
   .monthy_ {
     grid-template-columns: repeat(5, 1fr);
+  }
+  .selected_ ul {
+    font-size: 0.875rem;
+  }
+  .selected_ div button {
+    font-size: 0.75rem;
   }
 }/*# sourceMappingURL=styles.module.css.map */

@@ -1,7 +1,9 @@
 .table {
-    position: relative;
+    // position: relative;
     overflow-x: auto;
     margin-top: 1rem;
+    overflow-y: auto;
+    border: 1px solid blue;
 
 
     .table_main {

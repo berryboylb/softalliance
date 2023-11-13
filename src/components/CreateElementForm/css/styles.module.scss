@@ -148,6 +148,10 @@
 
 .item {
     width: 100%;
+
+    label {
+        margin-right: .5rem;
+    }
 }
 
 .label {
@@ -251,6 +255,23 @@
         &::placeholder {
             color: rgba(129, 141, 169, 1);
         }
+    }
+
+    .brom_ {
+        width: 100%;
+        outline: none;
+        border: none;
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 4px;
+        font-family: 'poppins';
+        font-size: .875rem;
+        color: rgba(129, 141, 169, 1);
+        background: rgba(225, 225, 225, 1);
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 }
 
@@ -368,6 +389,63 @@
     margin-top: 1rem;
 }
 
+.selected_{
+    border:  1px solid rgba(229, 229, 229, 1);
+    margin-top: 1rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-bottom: .5rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+
+    ul {
+        width: 80%;
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        font-size: .75rem;
+
+        li{
+            background: rgba(231, 231, 231, 1);
+            color: rgba(45, 65, 111, 1);
+            padding: .5rem;
+            margin-right: .5rem;
+            margin-top: .5rem;
+            text-transform: capitalize;
+
+            ._icon_ {
+                margin-left: .5rem;
+                cursor: pointer;
+                &:hover{
+                    color: rgba(224, 84, 83, 1);
+                }
+            }
+        }
+    }
+
+    div{
+
+        button {
+            border : none;
+            background: none;
+            color: rgba(129, 141, 169, 1);
+            font-size: .6rem;
+            cursor: pointer;
+            outline: none;
+
+        }
+
+        .toggle {
+            border-left: 1px solid rgba(129, 141, 169, 1);
+            padding-left: .5rem;
+            margin-left: .5rem;
+        }
+    }
+}
+
 @media screen and (min-width: 1024px) {
     .title {
         font-size: 1.5rem;
@@ -403,5 +481,23 @@
     .monthy_ {
         grid-template-columns: repeat(5, 1fr);
     }
+
+        .selected_ {
+    
+            ul {
+    
+                font-size: .875rem;
+    
+            }
+    
+            div {
+    
+                button {
+                    font-size: .75rem;
+    
+                }
+    
+            }
+        }
 
 }

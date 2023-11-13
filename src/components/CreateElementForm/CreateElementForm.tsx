@@ -9,6 +9,8 @@ import useDataFetching from "./useFetchLookups";
 import { add } from "../../store/reducers/elements-reducer";
 import { useAppDispatch } from "../../store/hooks";
 import Spinner from "../Spinner/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 const CreateElementForm = ({
   toggle,
   toggleSecond,
@@ -67,7 +69,10 @@ const CreateElementForm = ({
     )
     .refine(
       (data) => {
-        return data.payFrequency === "selectedMonths" && !!data.selectedMonths;
+        if (data.payFrequency === "selectedMonths") {
+          return !!data.selectedMonths;
+        }
+        return true;
       },
       {
         message: "Please add selected months",
@@ -86,9 +91,14 @@ const CreateElementForm = ({
     formState: { errors, isSubmitting },
   } = useForm<FormSchmaType>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      status: "inactive",
+    },
   });
 
   const [months, setMonths] = useState<string[]>([]);
+  const [toggleMonths, setToggleMonths] = useState<boolean>(false);
+  const handletoggleMonths = () => setToggleMonths((k) => !k);
   const handleMonths = (val: string) => {
     if (months.includes(val)) {
       setMonths((prev) => {
@@ -124,22 +134,37 @@ const CreateElementForm = ({
   const handleToggle = () =>
     setChecked((k) => {
       if (k) {
-        setValue("status", "active");
-      } else {
         setValue("status", "inactive");
+      } else {
+        setValue("status", "active");
       }
       return !k;
     });
-  
+
   const currentClassificationId = watch("classificationValueId");
 
   const filteredCategory = useMemo(() => {
     if (currentClassificationId === 7) {
-      return category && category.filter((item) => item.name.toLowerCase().includes('deduction'));
+      return (
+        category &&
+        category.filter((item) => item.name.toLowerCase().includes("deduction"))
+      );
     }
 
     if (currentClassificationId === 8) {
-      return category && category.filter((item) => item.name.toLowerCase().includes('earning'));
+      return (
+        category &&
+        category.filter((item) => item.name.toLowerCase().includes("earning"))
+      );
+    }
+
+    if (currentClassificationId === 9) {
+      return (
+        category &&
+        category.filter((item) =>
+          item.name.toLowerCase().includes("contribution")
+        )
+      );
     }
 
     return category;
@@ -208,6 +233,7 @@ const CreateElementForm = ({
             Element Category
           </label>
           <select
+            disabled={!currentClassificationId ? true : false}
             placeholder="Select Element Category"
             className={`${Styles.select} ${
               errors.categoryValueId &&
@@ -425,6 +451,7 @@ const CreateElementForm = ({
               <span>Monthly</span>
 
               <input
+                onClick={() => setMonths([])}
                 id="payFrequency"
                 type="radio"
                 value="monthly"
@@ -457,29 +484,41 @@ const CreateElementForm = ({
 
       {
         <div className={`${Styles.months} `}>
-          <label htmlFor="payFrequency" className={Styles.label}>
-            Selected Pay Months
-          </label>
-
-          <div
-            className={`${Styles.monthy_} ${
-              errors.selectedMonths &&
-              errors.selectedMonths.message &&
-              Styles.highlight
-            }`}
+          <button
+            className={Styles.brom_}
+            type="button"
+            onClick={handletoggleMonths}
+            disabled={watch("payFrequency") === "monthly" ? true : false}
           >
-            {monthsArray.map((item) => (
-              <label className={Styles.label} key={item}>
-                <input
-                  type="checkbox"
-                  name={item}
-                  onChange={() => handleMonths(item)}
-                  checked={months.includes(item) ? true : false}
-                />{" "}
-                {item}
-              </label>
-            ))}
-          </div>
+            <label htmlFor="payFrequency" className={Styles.label}>
+              Selected Pay Months
+            </label>
+            <FontAwesomeIcon
+              icon={toggleMonths ? faChevronUp : faChevronDown}
+            />
+          </button>
+
+          {toggleMonths && (
+            <div
+              className={`${Styles.monthy_} ${
+                errors.selectedMonths &&
+                errors.selectedMonths.message &&
+                Styles.highlight
+              }`}
+            >
+              {monthsArray.map((item) => (
+                <label className={Styles.label} key={item}>
+                  <input
+                    type="checkbox"
+                    name={item}
+                    onChange={() => handleMonths(item)}
+                    checked={months.includes(item) ? true : false}
+                  />{" "}
+                  {item}
+                </label>
+              ))}
+            </div>
+          )}
 
           <ErrorMessage
             errors={errors}
@@ -500,8 +539,7 @@ const CreateElementForm = ({
             }`}
           >
             <label>
-              <span>Yes</span>
-
+              <span>Yes</span>{" "}
               <input
                 type="radio"
                 value="yes"
@@ -509,10 +547,9 @@ const CreateElementForm = ({
                   required: "This is required.",
                 })}
               />
-            </label>
+            </label>{" "}
             <label>
-              <span> No</span>
-
+              <span> No</span>{" "}
               <input
                 type="radio"
                 value="no"
@@ -555,7 +592,7 @@ const CreateElementForm = ({
                 className={`${Styles.normal} ${checked ? Styles.active : ""}`}
               />
             </label>
-
+            {watch("status")}
             <span className={Styles.status}>
               {checked ? "Active" : "Inactive"}
             </span>

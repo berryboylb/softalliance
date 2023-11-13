@@ -135,7 +135,11 @@ export default function Elements() {
 
       {/* edit  */}
       <Modal modalIsOpen={modalEdit} closeModal={toggleEdit}>
-        <EditForm />
+        <EditForm
+          linkId={linkId}
+          toggle={toggleEdit}
+          toggleSecond={toggleSuccesfulEdit}
+        />
       </Modal>
     </Suspense>
   );

@@ -2,7 +2,7 @@
   border-radius: 10px;
   padding: 2rem;
   position: relative;
-  max-width: 768px;
+  max-width: 400px;
   z-index: 1000000000000000000000000000;
   background: white;
 }
@@ -16,4 +16,10 @@
   border: none;
   outline: none;
   background: none;
+}
+
+@media screen and (min-width: 768px) {
+  .backdrop {
+    max-width: 768px;
+  }
 }/*# sourceMappingURL=styles.module.css.map */
