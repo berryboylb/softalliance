@@ -2,14 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
   width: 100%;
-  padding: 1rem !important;
   font-family: "Gilroy", sans-serif;
+  margin-top: 1rem;
 }
 .header .top {
-  display: flex;
-  align-items: center;
+  display: none;
 }
 
 .right {
@@ -76,6 +74,9 @@
   font-size: 1.5rem;
   margin-right: 0;
   transition: all ease-in 300ms;
+  background: none;
+  border: none;
+  outline: none;
 }
 .burger_btn:hover {
   opacity: 0.8;
@@ -83,7 +84,13 @@
 
 @media screen and (min-width: 1024px) {
   .header {
-    padding: 1rem 0;
+    padding: 1rem !important;
+    margin-top: 0rem;
+    background: white;
+  }
+  .header .top {
+    display: flex;
+    align-items: center;
   }
   .link_ {
     display: inline-block;

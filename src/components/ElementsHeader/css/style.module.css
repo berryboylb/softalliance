@@ -4,11 +4,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  flex-wrap: wrap;
 }
 .element .inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .element .filter_ {
   background: #2D416F;
@@ -24,6 +26,7 @@
   align-items: center;
 }
 .element .btn {
+  margin-top: 1rem;
   color: #fff;
   background: #4BAA79;
   border-radius: 4px;
@@ -34,6 +37,7 @@
   font-size: 0.875rem;
   cursor: pointer;
   transition: all ease-in 300ms;
+  width: 100%;
 }
 .element .btn:hover {
   opacity: 0.9;
@@ -44,7 +48,14 @@
   font-size: 0.875rem;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 540px) {
+  .element .inner {
+    width: auto;
+  }
+  .element .btn {
+    width: auto;
+    margin-top: 0rem;
+  }
   .element button {
     font-size: 1rem;
   }

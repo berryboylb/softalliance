@@ -2,8 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding: 0.75rem;
   font-family: "Gilroy", sans-serif;
+  padding-bottom: 0.75rem;
 }
 .cont .big {
   cursor: pointer;
@@ -15,11 +15,13 @@
   color: #ABB3C5;
   text-transform: capitalize;
   font-weight: 700;
+  margin-top: 0.75rem;
 }
 .cont .icon {
   font-size: 1rem;
-  margin-left: 0.5rem;
   color: #ABB3C5;
+  margin: 0 0.5rem;
+  margin-top: 0.75rem;
 }
 .cont .link {
   font-size: 1rem;
@@ -27,7 +29,7 @@
   text-transform: capitalize;
   color: #ABB3C5;
   font-weight: 700;
-  margin-left: 0.5rem;
+  margin-top: 0.75rem;
 }
 .cont .link_active {
   font-size: 1rem;
@@ -35,5 +37,11 @@
   text-transform: capitalize;
   color: #2D416F;
   font-weight: 700;
-  margin-left: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .cont .big {
+    margin-left: 1rem;
+  }
 }/*# sourceMappingURL=style.module.css.map */

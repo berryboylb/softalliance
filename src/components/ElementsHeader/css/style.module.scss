@@ -4,11 +4,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    flex-wrap: wrap;
+   
 
     .inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
     }
 
     .filter_ {
@@ -26,6 +29,7 @@
     }
 
     .btn {
+        margin-top: 1rem;
         color: #fff;
         background: #4BAA79;
         border-radius: 4px;
@@ -36,6 +40,7 @@
         font-size: .875rem;
         cursor: pointer;
         transition:  all ease-in 300ms;
+        width: 100%;
 
         &:hover {
             opacity: .9;
@@ -51,11 +56,19 @@
 
 
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 540px) {
     .element {
+        .inner {
+            width: auto;
+        }
 
+        .btn {
+            width: auto;
+            margin-top: 0rem;
+        }
 
         button {
+            
             font-size: 1rem;
 
             .plus {

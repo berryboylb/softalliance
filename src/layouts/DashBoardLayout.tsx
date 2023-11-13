@@ -43,8 +43,9 @@ const DashboardLayout = () => {
     });
   const toggleModal = (): void => setModal(!modal);
   const isMobile: boolean = useMediaQuery({ query: `(max-width: 768px)` });
+   const isNavMobile: boolean = useMediaQuery({ query: `(max-width: 1024px)` });
   const handleMobileNav = () => {
-    if (isMobile) {
+    if (isNavMobile) {
       setmobileNav(!mobileNav);
     }
   };
@@ -63,8 +64,6 @@ const DashboardLayout = () => {
           className={
             isMobile
               ? `my-container ${Styles.bg}`
-              : expand
-              ? Styles.collapsed
               : Styles.expanded
           }
         >
@@ -79,7 +78,7 @@ const DashboardLayout = () => {
             <NavLinks currentOption={currentOption} />
             <div className={Styles.bg}>
               <BackButton />
-              <PagTitle/>
+              <PagTitle />
               <ConfirmDialogue
                 title=":( Logout?"
                 open={modal}

@@ -1,7 +1,5 @@
-
-
 .innerr_ {
-    transform: translateX(-100%);
+    // transform: translateX(-100%);
     width: 18rem;
     background: white;
     position: fixed;
@@ -78,7 +76,7 @@
     bottom: 0;
     overflow-x: hidden;
     overflow-y: scroll;
-    transform: translateX(-30%);
+    transform: translateX(-25%);
     position: absolute;
     right: 0;
     top: 0;
@@ -94,7 +92,6 @@
 }
 
 .notMobileNav {
-    transform: translateX(-100%);
     width: 18rem;
     background: white;
     top: 0;
@@ -104,6 +101,7 @@
     overflow-y: auto;
     z-index: 99;
     transition: all ease-in 300ms;
+    transform: translateX(-100%);
 }
 
 .rule {
@@ -123,12 +121,14 @@
 }
 
 @media screen and (min-width: 768px) {
-
     .mobileNav {
         transform: translateX(-100%);
         width: calc(100% - 50vw);
     }
+
 }
+
+
 
 @media screen and (min-width: 1024px) {
     .mobileNav {
@@ -152,9 +152,7 @@
     }
 
     .innerr_ {
-        transform: translateX(0%);
         z-index: auto;
     }
 
-    
 }

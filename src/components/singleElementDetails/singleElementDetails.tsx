@@ -110,7 +110,7 @@ const SingleElementDetails = () => {
             {singleElement?.selectedMonths &&
             singleElement?.selectedMonths.length > 0
               ? singleElement?.selectedMonths.map((item) => (
-                  <React.Fragment key={item}>{item}</React.Fragment>
+                <React.Fragment key={item}>{item},{" "}</React.Fragment>
                 ))
               : "N/A"}
           </p>

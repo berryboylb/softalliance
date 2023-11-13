@@ -1,15 +1,15 @@
 .table {
+  position: relative;
   overflow-x: auto;
   margin-top: 1rem;
-  overflow-y: auto;
-  border: 1px solid blue;
+  overflow-y: hidden;
 }
 .table .table_main {
   width: 100%;
   font-size: 0.875rem;
   text-align: left;
   border-collapse: collapse;
-  border: none;
+  overflow-y: hidden;
 }
 .table .table_main .tr_head {
   background-color: #2D416F;
@@ -55,7 +55,7 @@
   position: absolute;
   z-index: 9999;
   right: 70%;
-  top: 0rem;
+  bottom: -1rem;
   background: #fff;
   padding: 0.5rem;
   border-radius: 4px;
@@ -140,6 +140,16 @@
   font-family: "poppins";
 }
 
+@media screen and (min-width: 540px) {
+  .table {
+    margin-bottom: 5rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .table {
+    margin-bottom: 1.5rem;
+  }
+}
 @media screen and (min-width: 1024px) {
   .box {
     font-size: 1rem;

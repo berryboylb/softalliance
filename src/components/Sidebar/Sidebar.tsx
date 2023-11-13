@@ -24,7 +24,7 @@ const Index: React.FC<Props> = ({
   currentOption,
   toggleCurrentOption,
 }): JSX.Element => {
-  const isMobile: boolean = useMediaQuery({ query: `(max-width: 768px)` });
+  const isMobile: boolean = useMediaQuery({ query: `(max-width: 1024px)` });
   return (
     <Suspense>
       <div
@@ -33,9 +33,7 @@ const Index: React.FC<Props> = ({
             ? mobileNav
               ? Styles.mobileNav
               : Styles.notMobileNav
-            : expand
-            ? Styles.inner_
-            : Styles.innerr_
+            :  Styles.innerr_
         }
       >
         <Link
