@@ -1,7 +1,7 @@
 import  { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getSubs } from "../../store/reducers/subOrganization";
-import { getPayrun } from "../../store/reducers/employeeCategory";
+import { getEmployeeCategory } from "../../store/reducers/employeeCategory";
 // import { get } from "../../store/reducers/department-reducer";
 const useFetchData = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +17,7 @@ const useFetchData = () => {
   }, [dispatch, subOrganization]);
 
   useEffect(() => {
-    if (!employeeCategory) dispatch(getPayrun(3));
+    if (!employeeCategory) dispatch(getEmployeeCategory(3));
   }, [dispatch, employeeCategory]);
     
     // useEffect(() => {

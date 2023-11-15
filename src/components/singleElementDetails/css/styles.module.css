@@ -10,6 +10,7 @@
   padding-bottom: 0.5rem;
   border-left: 1px solid rgb(212, 216, 226);
   border-top: 1px solid rgb(212, 216, 226);
+  border-right: 1px solid rgb(212, 216, 226);
 }
 
 .right {
@@ -19,10 +20,6 @@
   border-left: 1px solid rgb(212, 216, 226);
   border-right: 1px solid rgb(212, 216, 226);
   border-top: 1px solid rgb(212, 216, 226);
-}
-
-.fix {
-  border-bottom: 1px solid rgb(212, 216, 226);
 }
 
 .label {
@@ -37,6 +34,15 @@
   text-transform: capitalize;
 }
 
+.fix {
+  display: none;
+}
+
+.fix_ {
+  display: block !important;
+  border-bottom: 1px solid rgb(212, 216, 226) !important;
+}
+
 @media screen and (min-width: 1024px) {
   .taby {
     grid-template-columns: repeat(2, 1fr);
@@ -46,5 +52,12 @@
   }
   .para {
     font-size: 0.875rem;
+  }
+  .left {
+    border-right: none;
+  }
+  .fix {
+    display: block;
+    border-bottom: 1px solid rgb(212, 216, 226);
   }
 }/*# sourceMappingURL=styles.module.css.map */

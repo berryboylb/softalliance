@@ -15,20 +15,20 @@ type LookupValues = {
 
 type InitialState = {
   loading: boolean;
-  employeeCategory: LookupValues[] | null;
-  singleEmployeeCategory: LookupValues | null;
+  location: LookupValues[] | null;
+  singleLocation: LookupValues | null;
   error: string[];
 };
 
 const initialState: InitialState = {
   loading: false,
-  employeeCategory: null,
-  singleEmployeeCategory: null,
+  location: null,
+  singleLocation: null,
   error: [],
 };
 
-export const getEmployeeCategory = createAsyncThunk(
-  "employeeCategory/getLookupById",
+export const get = createAsyncThunk(
+  "location/getLookupById",
   async (id: number) => {
     try {
       const res = await axios.get(`${baseUrl}/lookups/${id}/lookupvalues`);
@@ -50,7 +50,7 @@ export type Values = {
 };
 
 export const getLookupValuesById = createAsyncThunk(
-  "employeeCategory/getLookupValuesById",
+  "location/getLookupValuesById",
   async (values: Values) => {
     try {
       const res = await axios.get(
@@ -70,22 +70,22 @@ export const getLookupValuesById = createAsyncThunk(
 );
 
 const Slice = createSlice({
-  name: "employeeCategory",
+  name: "location",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getEmployeeCategory.pending, (state) => {
+    builder.addCase(get.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(
-      getEmployeeCategory.fulfilled,
+      get.fulfilled,
       (state, action: PayloadAction<LookupValues[]>) => {
         state.loading = false;
-        state.employeeCategory = action.payload;
+        state.location = action.payload;
       }
     );
     builder.addCase(
-      getEmployeeCategory.rejected,
+      get.rejected,
       (state, action: PayloadAction<unknown>) => {
         state.loading = false;
         if (action?.payload) {
@@ -103,7 +103,7 @@ const Slice = createSlice({
       getLookupValuesById.fulfilled,
       (state, action: PayloadAction<LookupValues>) => {
         state.loading = false;
-        state.singleEmployeeCategory = action.payload;
+        state.singleLocation = action.payload;
       }
     );
     builder.addCase(

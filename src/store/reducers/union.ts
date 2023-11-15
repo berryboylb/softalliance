@@ -15,34 +15,31 @@ type LookupValues = {
 
 type InitialState = {
   loading: boolean;
-  employeeCategory: LookupValues[] | null;
-  singleEmployeeCategory: LookupValues | null;
+  union: LookupValues[] | null;
+  singleUnion: LookupValues | null;
   error: string[];
 };
 
 const initialState: InitialState = {
   loading: false,
-  employeeCategory: null,
-  singleEmployeeCategory: null,
+  union: null,
+  singleUnion: null,
   error: [],
 };
 
-export const getEmployeeCategory = createAsyncThunk(
-  "employeeCategory/getLookupById",
-  async (id: number) => {
-    try {
-      const res = await axios.get(`${baseUrl}/lookups/${id}/lookupvalues`);
-      return res.data;
-    } catch (err) {
-      if (err instanceof Error) {
-        toast.error(err.message);
-      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-        err.response.data.message.map((err: string) => toast.error(err));
-        return err.response.data.message;
-      }
+export const get = createAsyncThunk("union/getLookupById", async (id: number) => {
+  try {
+    const res = await axios.get(`${baseUrl}/lookups/${id}/lookupvalues`);
+    return res.data;
+  } catch (err) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      err.response.data.message.map((err: string) => toast.error(err));
+      return err.response.data.message;
     }
   }
-);
+});
 
 export type Values = {
   lookupId: string;
@@ -50,7 +47,7 @@ export type Values = {
 };
 
 export const getLookupValuesById = createAsyncThunk(
-  "employeeCategory/getLookupValuesById",
+  "union/getLookupValuesById",
   async (values: Values) => {
     try {
       const res = await axios.get(
@@ -70,32 +67,29 @@ export const getLookupValuesById = createAsyncThunk(
 );
 
 const Slice = createSlice({
-  name: "employeeCategory",
+  name: "union",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getEmployeeCategory.pending, (state) => {
+    builder.addCase(get.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(
-      getEmployeeCategory.fulfilled,
+      get.fulfilled,
       (state, action: PayloadAction<LookupValues[]>) => {
         state.loading = false;
-        state.employeeCategory = action.payload;
+        state.union = action.payload;
       }
     );
-    builder.addCase(
-      getEmployeeCategory.rejected,
-      (state, action: PayloadAction<unknown>) => {
-        state.loading = false;
-        if (action?.payload) {
-          const error = action.payload as { message?: string[] | undefined };
-          state.error = error.message || ["Something went wrong"];
-        } else {
-          state.error = ["Something went wrong"];
-        }
+    builder.addCase(get.rejected, (state, action: PayloadAction<unknown>) => {
+      state.loading = false;
+      if (action?.payload) {
+        const error = action.payload as { message?: string[] | undefined };
+        state.error = error.message || ["Something went wrong"];
+      } else {
+        state.error = ["Something went wrong"];
       }
-    );
+    });
     builder.addCase(getLookupValuesById.pending, (state) => {
       state.loading = true;
     });
@@ -103,7 +97,7 @@ const Slice = createSlice({
       getLookupValuesById.fulfilled,
       (state, action: PayloadAction<LookupValues>) => {
         state.loading = false;
-        state.singleEmployeeCategory = action.payload;
+        state.singleUnion = action.payload;
       }
     );
     builder.addCase(

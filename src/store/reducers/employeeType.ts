@@ -15,20 +15,20 @@ type LookupValues = {
 
 type InitialState = {
   loading: boolean;
-  employeeCategory: LookupValues[] | null;
-  singleEmployeeCategory: LookupValues | null;
+  employeeType: LookupValues[] | null;
+  singleEmployeeType: LookupValues | null;
   error: string[];
 };
 
 const initialState: InitialState = {
   loading: false,
-  employeeCategory: null,
-  singleEmployeeCategory: null,
+  employeeType: null,
+  singleEmployeeType: null,
   error: [],
 };
 
-export const getEmployeeCategory = createAsyncThunk(
-  "employeeCategory/getLookupById",
+export const getEmployeeType = createAsyncThunk(
+  "employeeType/getLookupById",
   async (id: number) => {
     try {
       const res = await axios.get(`${baseUrl}/lookups/${id}/lookupvalues`);
@@ -50,7 +50,7 @@ export type Values = {
 };
 
 export const getLookupValuesById = createAsyncThunk(
-  "employeeCategory/getLookupValuesById",
+  "employeeType/getLookupValuesById",
   async (values: Values) => {
     try {
       const res = await axios.get(
@@ -70,22 +70,22 @@ export const getLookupValuesById = createAsyncThunk(
 );
 
 const Slice = createSlice({
-  name: "employeeCategory",
+  name: "employeeType",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getEmployeeCategory.pending, (state) => {
+    builder.addCase(getEmployeeType.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(
-      getEmployeeCategory.fulfilled,
+      getEmployeeType.fulfilled,
       (state, action: PayloadAction<LookupValues[]>) => {
         state.loading = false;
-        state.employeeCategory = action.payload;
+        state.employeeType = action.payload;
       }
     );
     builder.addCase(
-      getEmployeeCategory.rejected,
+      getEmployeeType.rejected,
       (state, action: PayloadAction<unknown>) => {
         state.loading = false;
         if (action?.payload) {
@@ -103,7 +103,7 @@ const Slice = createSlice({
       getLookupValuesById.fulfilled,
       (state, action: PayloadAction<LookupValues>) => {
         state.loading = false;
-        state.singleEmployeeCategory = action.payload;
+        state.singleEmployeeType = action.payload;
       }
     );
     builder.addCase(

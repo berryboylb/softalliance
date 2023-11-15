@@ -25,7 +25,7 @@ const initialState: InitialState = {
   error: [],
 };
 
-export const get = createAsyncThunk("department/get", async (id: string) => {
+export const get = createAsyncThunk("department/get", async (id: number) => {
   try {
     const res = await axios.get(`${baseUrl}/suborganizations/${id}/departments`);
     toast.success(res.data.message);
@@ -64,6 +64,7 @@ const DepartmentSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(get.pending, (state) => {
       state.loading = true;
+      state.department = null;
     });
     builder.addCase(
       get.fulfilled,

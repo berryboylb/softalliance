@@ -446,6 +446,17 @@
     }
 }
 
+.additional {
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid rgba(229, 229, 229, 1);
+    border-radius: 4px;
+}
+
+.add_label {
+    color: rgba(45, 65, 111, 1) !important;
+}
+
 @media screen and (min-width: 1024px) {
     .title {
         font-size: 1.5rem;

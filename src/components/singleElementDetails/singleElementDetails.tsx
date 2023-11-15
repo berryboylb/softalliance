@@ -110,7 +110,7 @@ const SingleElementDetails = () => {
             {singleElement?.selectedMonths &&
             singleElement?.selectedMonths.length > 0
               ? singleElement?.selectedMonths.map((item) => (
-                <React.Fragment key={item}>{item},{" "}</React.Fragment>
+                  <React.Fragment key={item}>{item}, </React.Fragment>
                 ))
               : "N/A"}
           </p>
@@ -122,12 +122,12 @@ const SingleElementDetails = () => {
         </div>
       </div>
       <div className={Style.taby}>
-        <div className={`${Style.left} ${Style.fix}`}>
+        <div className={`${Style.left} ${Style.fix} ${Style.fix_}`}>
           <label className={Style.label}>Status</label>
           <p className={Style.para}>{singleElement?.status}</p>
         </div>
 
-        <div className={`${Style.right} ${Style.fix}`}></div>
+        <div className={`${Style.right} ${Style.fix} `}></div>
       </div>
     </div>
   );

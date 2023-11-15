@@ -592,7 +592,6 @@ const CreateElementForm = ({
                 className={`${Styles.normal} ${checked ? Styles.active : ""}`}
               />
             </label>
-            {watch("status")}
             <span className={Styles.status}>
               {checked ? "Active" : "Inactive"}
             </span>

@@ -15,20 +15,20 @@ type LookupValues = {
 
 type InitialState = {
   loading: boolean;
-  employeeCategory: LookupValues[] | null;
-  singleEmployeeCategory: LookupValues | null;
+  housing: LookupValues[] | null;
+  singleHousing: LookupValues | null;
   error: string[];
 };
 
 const initialState: InitialState = {
   loading: false,
-  employeeCategory: null,
-  singleEmployeeCategory: null,
+  housing: null,
+  singleHousing: null,
   error: [],
 };
 
-export const getEmployeeCategory = createAsyncThunk(
-  "employeeCategory/getLookupById",
+export const get = createAsyncThunk(
+  "housing/getLookupById",
   async (id: number) => {
     try {
       const res = await axios.get(`${baseUrl}/lookups/${id}/lookupvalues`);
@@ -50,7 +50,7 @@ export type Values = {
 };
 
 export const getLookupValuesById = createAsyncThunk(
-  "employeeCategory/getLookupValuesById",
+  "housing/getLookupValuesById",
   async (values: Values) => {
     try {
       const res = await axios.get(
@@ -70,32 +70,29 @@ export const getLookupValuesById = createAsyncThunk(
 );
 
 const Slice = createSlice({
-  name: "employeeCategory",
+  name: "housing",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getEmployeeCategory.pending, (state) => {
+    builder.addCase(get.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(
-      getEmployeeCategory.fulfilled,
+      get.fulfilled,
       (state, action: PayloadAction<LookupValues[]>) => {
         state.loading = false;
-        state.employeeCategory = action.payload;
+        state.housing = action.payload;
       }
     );
-    builder.addCase(
-      getEmployeeCategory.rejected,
-      (state, action: PayloadAction<unknown>) => {
-        state.loading = false;
-        if (action?.payload) {
-          const error = action.payload as { message?: string[] | undefined };
-          state.error = error.message || ["Something went wrong"];
-        } else {
-          state.error = ["Something went wrong"];
-        }
+    builder.addCase(get.rejected, (state, action: PayloadAction<unknown>) => {
+      state.loading = false;
+      if (action?.payload) {
+        const error = action.payload as { message?: string[] | undefined };
+        state.error = error.message || ["Something went wrong"];
+      } else {
+        state.error = ["Something went wrong"];
       }
-    );
+    });
     builder.addCase(getLookupValuesById.pending, (state) => {
       state.loading = true;
     });
@@ -103,7 +100,7 @@ const Slice = createSlice({
       getLookupValuesById.fulfilled,
       (state, action: PayloadAction<LookupValues>) => {
         state.loading = false;
-        state.singleEmployeeCategory = action.payload;
+        state.singleHousing = action.payload;
       }
     );
     builder.addCase(

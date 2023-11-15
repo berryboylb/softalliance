@@ -69,7 +69,7 @@ export const getById = createAsyncThunk("grade/getById", async (id: string) => {
 
 export const getGradeSteps = createAsyncThunk(
   "grade/gradesteps",
-  async (id: string) => {
+  async (id: number) => {
     try {
       const res = await axios.get(`${baseUrl}/grade/${id}/gradesteps`);
       toast.success(res.data.message);

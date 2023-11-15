@@ -11,6 +11,7 @@ import { elementLinkAccessor } from "../../constants";
 import SingleElementDetails from "../SingleElementPopup/SingleElementPopup";
 const SuccessComp = lazy(() => import("../Success/Success"));
 const Empty = lazy(() => import("../EmptyElement/EmptyElement"));
+const Form = lazy(() => import("../CreateElementsLinksForm/CreateElementsLinksForm"));
 const ElementLinks = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -50,7 +51,7 @@ const ElementLinks = () => {
       )}
       {popup && <SingleElementDetails linkId={linkId} toggle={togglePopup} />}
       <Modal modalIsOpen={modalIsOpen} closeModal={toggle}>
-        HELLO FORM
+        <Form />
       </Modal>
 
       <Modal modalIsOpen={secondModalIsOpen} closeModal={toggleSecond}>
