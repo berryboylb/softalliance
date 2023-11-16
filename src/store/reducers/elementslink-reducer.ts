@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -38,8 +39,6 @@ type Res = {
   content: ElementsLink[];
 };
 
-
-
 type InitialState = {
   loading: boolean;
   singleElementLink: ElementsLink | null;
@@ -52,62 +51,87 @@ const initialState: InitialState = {
   loading: false,
   singleElementLink: null,
   elementsLink: null,
-  total : null,
+  total: null,
   error: [],
 };
 
-export const get = createAsyncThunk(
-  "elementLink/get",
-  async (id:string) => {
+export const get = createAsyncThunk("elementLink/get", async (id: string) => {
+  try {
+    const res = await axios.get(`${baseUrl}/elements/${id}/elementlinks`);
+    toast.success(res.data.message);
+    console.log(res.data.data);
+    return res.data.data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.log(err.message);
+      toast.error(err.message);
+    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+      console.log(err.response.data);
+      return err.response.data.message;
+    }
+  }
+});
+
+type IElement = {
+  id: number;
+  body: any | {
+    name: string;
+    suborganizationId?: number;
+    locationId?: number;
+    departmentId?: number;
+    employeeCategoryId: number;
+    employeeCategoryValueId?: number;
+    employeeTypeId: number;
+    employeeTypeValueId?: number;
+    jobTitleId?: number;
+    grade?: number;
+    gradeStep?: number;
+    unionId?: number;
+    amountType: string;
+    amount?: number;
+    rate?: number;
+    effectiveStartDate?: string;
+    effectiveEndDate?: string;
+    status?: string;
+    automate: string;
+    modifiedBy: string;
+    additionalInfo?: Array<{
+      lookupId: number;
+      lookupValueId: number;
+    }>;
+  }
+};
+
+export const add = createAsyncThunk(
+  "elementLink/add",
+  async (values: IElement) => {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    const body = JSON.stringify(values.body);
     try {
-      const res = await axios.get(`${baseUrl}/elements/${id}/elementlinks`);
+      const res = await axios.post(
+        `${baseUrl}/elements/${values.id}/elementlinks`,
+        body,
+        config
+      );
       toast.success(res.data.message);
-      console.log(res.data.data)
       return res.data.data;
-    } catch (err: unknown) {
-       if (err instanceof Error) {
-         console.log(err.message);
-         toast.error(err.message);
-       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-         console.log(err.response.data);
-         return err.response.data.message;
-       }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+        toast.error(err.message);
+      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+        console.log(err.response.data);
+        return err.response.data.message;
+      }
     }
   }
 );
 
-type IElement = {
-  name: string;
-  id: string;
-};
-
-export const add = createAsyncThunk("elementLink/add", async (values: IElement) => {
-  const config = {
-    headers: { "Content-Type": "application/json" },
-  };
-  const body = JSON.stringify(values);
-  try {
-    const res = await axios.post(
-      `${baseUrl}/elements/${values.id}/elementlinks`,
-      body,
-      config
-    );
-    toast.success(res.data.message);
-    return res.data.data;
-  } catch (err) {
-     if (err instanceof Error) {
-       console.log(err.message);
-       toast.error(err.message);
-     } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-       console.log(err.response.data);
-       return err.response.data.message;
-     }
-  }
-});
-
 type ElementLink = {
-    id: string;
-    elementId: string
+  id: string;
+  elementId: string;
 };
 
 export const getById = createAsyncThunk(
@@ -120,13 +144,13 @@ export const getById = createAsyncThunk(
       toast.success(res.data.message);
       return res.data.data;
     } catch (err) {
-       if (err instanceof Error) {
-         console.log(err.message);
-         toast.error(err.message);
-       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-         console.log(err.response.data);
-         return err.response.data.message;
-       }
+      if (err instanceof Error) {
+        console.log(err.message);
+        toast.error(err.message);
+      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+        console.log(err.response.data);
+        return err.response.data.message;
+      }
     }
   }
 );
@@ -151,13 +175,13 @@ export const update = createAsyncThunk(
       toast.success(res.data.message);
       // return res.data;
     } catch (err) {
-       if (err instanceof Error) {
-         console.log(err.message);
-         toast.error(err.message);
-       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-         console.log(err.response.data);
-         return err.response.data.message;
-       }
+      if (err instanceof Error) {
+        console.log(err.message);
+        toast.error(err.message);
+      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+        console.log(err.response.data);
+        return err.response.data.message;
+      }
     }
   }
 );
@@ -169,17 +193,20 @@ export const deleteOne = createAsyncThunk(
       headers: { "Content-Type": "application/json" },
     };
     try {
-      const res = await axios.delete( `${baseUrl}/elements/${values.id}/elementlinks/${values.elementId}`, config);
+      const res = await axios.delete(
+        `${baseUrl}/elements/${values.id}/elementlinks/${values.elementId}`,
+        config
+      );
       toast.success(res.data.message);
       return values.id;
     } catch (err) {
-       if (err instanceof Error) {
-         console.log(err.message);
-         toast.error(err.message);
-       } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-         console.log(err.response.data);
-         return err.response.data.message;
-       }
+      if (err instanceof Error) {
+        console.log(err.message);
+        toast.error(err.message);
+      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
+        console.log(err.response.data);
+        return err.response.data.message;
+      }
     }
   }
 );
@@ -192,9 +219,13 @@ const ElementLinkSlice = createSlice({
     builder.addCase(add.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(add.fulfilled, (state) => {
-      state.loading = false;
-    });
+    builder.addCase(
+      add.fulfilled,
+      (state, action: PayloadAction<ElementsLink>) => {
+        state.loading = false;
+        state.elementsLink = state.elementsLink && state.elementsLink.length > 0 [...state.elementsLink, action.payload] : state.elementsLink;
+      }
+    );
     builder.addCase(add.rejected, (state, action: PayloadAction<unknown>) => {
       state.loading = false;
       if (action?.payload) {

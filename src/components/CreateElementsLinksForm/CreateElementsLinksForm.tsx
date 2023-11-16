@@ -7,7 +7,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import useFetchData from "./useFetchData";
 import Spinner from "../Spinner/Spinner";
 import { add } from "../../store/reducers/elementslink-reducer";
-
+import { useAppDispatch } from "../../store/hooks";
+import { useParams } from "react-router-dom";
 const lookupSchema = z.object({
   lookupId: z.number(),
   lookupValueId: z.number(),
@@ -20,6 +21,8 @@ const CreateElementsLinksForm = ({
   toggle: () => void;
   toggleSecond: () => void;
 }) => {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
   const formSchema = z
     .object({
       name: z.string().min(3),
@@ -182,13 +185,17 @@ const CreateElementsLinksForm = ({
     const cleanedData = Object.fromEntries(
       Object.entries(data).filter(([, value]) => value !== undefined)
     );
-    const modifiedData = {
+    const body = {
       ...cleanedData,
       modifiedBy: "olorunfemi Daramola",
       employeeCategoryId: 3,
       employeeTypeId: 4,
     };
-    dispatch(add(modifiedData));
+    const values = {
+      id: Number(id),
+      body,
+    };
+    dispatch(add(values));
     reset();
     toggle();
     toggleSecond();

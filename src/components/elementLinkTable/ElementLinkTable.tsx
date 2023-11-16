@@ -18,6 +18,8 @@ type Props = {
   }[];
   toggle: () => void;
   handleLinkChange: (val: string | null) => void;
+  toggleDeleteConfirm: () => void;
+  toggleEdit: () => void;
 };
 
 export const getById = async (subId: string, depId: string) => {
@@ -40,6 +42,8 @@ const Index: React.FC<Props> = ({
   columnsArr,
   toggle,
   handleLinkChange,
+  toggleDeleteConfirm,
+  toggleEdit,
 }) => {
   const [datas, setDatas] = useState(dataArr);
   useEffect(() => {
@@ -144,11 +148,21 @@ const Index: React.FC<Props> = ({
                   </td>
                   <td className={Style.action}>
                     <div className={Styles.actions_}>
-                      <button>
+                      <button
+                        onClick={() => {
+                          handleLinkChange(data[Number(row.id)].id);
+                          toggleEdit();
+                        }}
+                      >
                         {" "}
                         <img src={Pen} alt={Pen} />{" "}
                       </button>
-                      <button>
+                      <button
+                        onClick={() => {
+                          handleLinkChange(data[Number(row.id)].id);
+                          toggleDeleteConfirm();
+                        }}
+                      >
                         {" "}
                         <img src={Bin} alt={Bin} />{" "}
                       </button>
