@@ -109,11 +109,11 @@ const LiveSearch = <T extends object>({
 
           {/* search results container */}
           {showResults && (
-            <div className="absolute mt-1 w-full p-2 z-[5] bg-white text-black shadow-lg rounded-bl rounded-br max-h-56 overflow-y-auto">
+            <div className={Style.box}>
               {results.map((item, i: number) => (
                 <div
-                  className="cursor-pointer hover:bg-black hover:bg-opacity-10 p-2"
-                  onMouseDown={() => handleSelection(focusedIndex)}
+                  className={Style.cursor}
+                  onMouseDown={() => handleSelection(i)}
                   key={i}
                   ref={i === focusedIndex ? resultContainer : null}
                   style={{

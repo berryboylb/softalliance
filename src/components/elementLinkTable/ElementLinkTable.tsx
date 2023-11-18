@@ -122,12 +122,22 @@ const Index: React.FC<Props> = ({
                               )
                             ) : (
                               <>
-                                {cell.column.id === "employeeCategoryValueId"
-                                  ? getName(
-                                      String(cell.value),
-                                      employeeCategory ? employeeCategory : []
-                                    )
-                                  : cell.render("Cell")}
+                                {cell.column.id ===
+                                "employeeCategoryValueId" ? (
+                                  getName(
+                                    String(cell.value),
+                                    employeeCategory ? employeeCategory : []
+                                  )
+                                ) : (
+                                  <>
+                                    {" "}
+                                    {cell.column.id === "departmentId"
+                                      ? cell.value
+                                        ? cell.render("Cell")
+                                        : "N/A"
+                                      : cell.render("Cell")}{" "}
+                                  </>
+                                )}
                               </>
                             )}
                           </>

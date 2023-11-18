@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { baseUrl } from "../../constants";
 
-type Elements = {
+export type Elements = {
   id: string;
   name: string;
   description: string;

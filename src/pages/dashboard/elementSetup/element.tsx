@@ -4,6 +4,8 @@ import { get, deleteOne } from "../../../store/reducers/elements-reducer";
 import { getLoop } from "../../../store/reducers/lookup-reducer";
 import { elementAccesor } from "../../../constants";
 import { BigBin, RedCheck, Success } from "../../../assets";
+import { Elements as ElementsType } from "../../../store/reducers/elements-reducer";
+import Pagination from "../../../components/pagination/pagination";
 const EleemntsHeader = lazy(
   () => import("../../../components/ElementsHeader/ElementsHeader")
 );
@@ -20,16 +22,58 @@ const SuccessComp = lazy(() => import("../../../components/Success/Success"));
 
 const DeleteComp = lazy(() => import("../../../components/Delete/Delete"));
 
-const EditForm = lazy(() => import("../../../components/EditElementsForm/EditElementForm"));
+const EditForm = lazy(
+  () => import("../../../components/EditElementsForm/EditElementForm")
+);
 
 export default function Elements() {
   const dispatch = useAppDispatch();
   const elements = useAppSelector((state) => state.elements);
-  const options = useMemo(
-    () =>
-      elements.elements && elements.elements.length > 0 && elements.elements,
-    [elements.elements]
-  );
+  //search
+  const [selected, setSelected] = useState<ElementsType>();
+  const handleSelect = (val: ElementsType | undefined) => setSelected(val);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [postsPerPage] = useState<number>(3);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const previousPage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = () => {
+    if (
+      currentPage !==
+      Math.ceil(
+        elements.elements ? elements.elements?.length : 0 / postsPerPage
+      )
+    ) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  const options = useMemo(() => {
+    if (selected) {
+      console.log(selected);
+      return [{ ...selected }];
+    }
+
+    return (
+      elements.elements &&
+      elements.elements.length > 0 &&
+      elements.elements.slice(indexOfFirstPost, indexOfLastPost)
+      // Array.from({ length: totalItems }, (_, index) => index + 1).slice(
+      //   (currentPage - 1) * itemsPerPage,
+      //   currentPage * itemsPerPage
+      // )
+    );
+  }, [elements.elements, selected, currentPage]);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [secondModalIsOpen, secondSetIsOpen] = useState<boolean>(false);
   const toggleSecond = () => secondSetIsOpen((k) => !k);
@@ -65,20 +109,35 @@ export default function Elements() {
   }, [dispatch]);
   return (
     <Suspense>
-      <EleemntsHeader toggle={toggle} />
+      <EleemntsHeader
+        selected={selected}
+        handleSelect={handleSelect}
+        toggle={toggle}
+      />
       {!elements.loading && options && options.length > 0 ? (
-        <Table
-          columnsArr={elementAccesor}
-          dataArr={options}
-          toggle={toggleDelete}
-          handleLinkChange={handleLinkChange}
-          box={box}
-          toggleBox={toggleBox}
-          toggleEdit={toggleEdit}
-        />
+        <>
+          <Table
+            columnsArr={elementAccesor}
+            dataArr={options}
+            toggle={toggleDelete}
+            handleLinkChange={handleLinkChange}
+            box={box}
+            toggleBox={toggleBox}
+            toggleEdit={toggleEdit}
+          />
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={elements.elements?.length || 0}
+            previousPage={previousPage}
+            nextPage={nextPage}
+            currentPage={currentPage}
+            paginate={paginate}
+          />
+        </>
       ) : (
         <Empty text="There are no elements to display" />
       )}
+
       <Modal modalIsOpen={modalIsOpen} closeModal={toggle}>
         <Form toggle={toggle} toggleSecond={toggleSecond} />
       </Modal>
@@ -91,7 +150,6 @@ export default function Elements() {
         />
       </Modal>
 
-      {/* {linkId && linkId} */}
       {modalDelete && (
         <DeleteComp
           toggle={() => {

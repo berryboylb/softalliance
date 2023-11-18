@@ -2,34 +2,37 @@
 import React, { Suspense } from "react";
 import Styles from "./css/style.module.css";
 import LiveSearch from "../LiveSearch/LiveSearch";
-import { results } from "../../constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Filter } from "../../assets";
-
-export default function EleemntsHeader({ toggle }: {toggle: () => void}) {
-  const [selectedProfile, setSelectedProfile] =
-    React.useState<{
-      id: string;
-      name: string;
-      role: string;
-    }>();
+import { useAppSelector } from "../../store/hooks";
+import { Elements } from "../../store/reducers/elements-reducer";
+export default function EleemntsHeader({
+  toggle,
+  handleSelect,
+  selected,
+}: {
+  toggle: () => void;
+  selected: Elements | undefined;
+  handleSelect: (val: Elements | undefined) => void;
+}) {
+  const { elements } = useAppSelector((state) => state.elements);
+  // const [selected, setSelected] = React.useState<Elements>();
   const [searchResults, setSearchResults] =
-    React.useState<
-      {
-        id: string;
-        name: string;
-      }[]
-    >();
-  const handleChange = (e:any) => {
+    React.useState<Array<Elements> | null>([]);
+  const handleChange = (e: any) => {
     const { target } = e;
     if (!target.value.trim()) return setSearchResults([]);
-
-    const filteredValue = results.filter((result) =>
-      result.name.toLowerCase().startsWith(target.value)
-    );
-
-    setSearchResults(filteredValue);
+    if (selected) {
+      handleSelect(undefined);
+    }
+    if (elements && elements.length > 0) {
+      const filteredValue = elements.filter((result) =>
+        result.name.toLowerCase().includes(target.value.toLowerCase())
+      );
+      console.log("filteredValue", filteredValue);
+      setSearchResults(filteredValue);
+    }
   };
   return (
     <Suspense>
@@ -37,15 +40,15 @@ export default function EleemntsHeader({ toggle }: {toggle: () => void}) {
         <div className={Styles.inner}>
           <LiveSearch
             placeholder="Search for element"
-            results={searchResults}
+            results={searchResults as any}
             onChange={handleChange}
             onSelect={(item: any) => {
               console.log(item);
-              setSelectedProfile(item);
+              handleSelect(item);
             }}
-            value={selectedProfile?.name}
+            value={selected?.name}
             onSubmit={() => {
-              if (selectedProfile) console.log(selectedProfile);
+              if (selected) console.log(selected);
             }}
             renderItem={(item: any) => (
               <p className="text-black ">{item.name}</p>

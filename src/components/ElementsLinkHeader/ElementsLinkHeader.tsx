@@ -2,33 +2,26 @@
 import React, { Suspense } from "react";
 import Styles from "../ElementsHeader/css/style.module.css";
 import LiveSearch from "../LiveSearch/LiveSearch";
-import { results } from "../../constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useAppSelector } from "../../store/hooks";
+import { Elements } from "../../store/reducers/elements-reducer";
 
 export default function ElementsLinkHeader({ toggle }: { toggle: () => void }) {
-  const [selectedProfile, setSelectedProfile] =
-    React.useState<{
-      id: string;
-      name: string;
-      role: string;
-    }>();
+  const { elements } = useAppSelector((state) => state.elements);
+  const [selected, setSelected] = React.useState<Elements>();
   const [searchResults, setSearchResults] =
-    React.useState<
-      {
-        id: string;
-        name: string;
-      }[]
-    >();
+    React.useState<Array<Elements> | null>([]);
   const handleChange = (e: any) => {
     const { target } = e;
     if (!target.value.trim()) return setSearchResults([]);
-
-    const filteredValue = results.filter((result) =>
-      result.name.toLowerCase().startsWith(target.value)
-    );
-
-    setSearchResults(filteredValue);
+    if (elements && elements.length > 0) {
+      console.log(elements);
+      const filteredValue = elements.filter((result) =>
+        result.name.toLowerCase().includes(target.value)
+      );
+      setSearchResults(filteredValue);
+    }
   };
   return (
     <Suspense>
@@ -36,15 +29,15 @@ export default function ElementsLinkHeader({ toggle }: { toggle: () => void }) {
         <div className={Styles.inner}>
           <LiveSearch
             placeholder="Search for element link"
-            results={searchResults}
+            results={searchResults as any}
             onChange={handleChange}
             onSelect={(item: any) => {
               console.log(item);
-              setSelectedProfile(item);
+              setSelected(item);
             }}
-            value={selectedProfile?.name}
+            value={selected?.name}
             onSubmit={() => {
-              if (selectedProfile) console.log(selectedProfile);
+              if (selected) console.log(selected);
             }}
             renderItem={(item: any) => (
               <p className="text-black ">{item.name}</p>

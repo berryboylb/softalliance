@@ -16,6 +16,7 @@ export function convertDateFormat(inputDate: string): string {
 }
 
 export function convertDateFormatOnly(inputDate: string): string {
+  if (!inputDate)  return "N/A"
   const dateObject = new Date(inputDate);
 
   // Format the date as "DD - MM - YYYY"

@@ -5,6 +5,7 @@ import axios from "axios";
 import { baseUrl } from "../../constants";
 
 type ElementsLink = {
+  id: string;
   name: string;
   elementId: number;
   suborganizationId: number;
@@ -198,7 +199,7 @@ export const deleteOne = createAsyncThunk(
         config
       );
       toast.success(res.data.message);
-      return values.id;
+      return values.elementId;
     } catch (err) {
       if (err instanceof Error) {
         console.log(err.message);
@@ -223,7 +224,7 @@ const ElementLinkSlice = createSlice({
       add.fulfilled,
       (state, action: PayloadAction<ElementsLink>) => {
         state.loading = false;
-        state.elementsLink = state.elementsLink && state.elementsLink.length > 0 [...state.elementsLink, action.payload] : state.elementsLink;
+        state.elementsLink = state.elementsLink && state.elementsLink.length > 0 ? [...state.elementsLink, action.payload] : state.elementsLink;
       }
     );
     builder.addCase(add.rejected, (state, action: PayloadAction<unknown>) => {
@@ -305,7 +306,7 @@ const ElementLinkSlice = createSlice({
         state.loading = false;
         state.elementsLink =
           state.elementsLink?.filter(
-            (item) => item.elementId !== Number(action.payload)
+            (item) => Number(item.id) !== Number(action.payload)
           ) || [];
       }
     );

@@ -59,7 +59,7 @@ const Index: React.FC<Props> = ({
     if (!item) return "N/A";
     return item.name;
   };
-  const data = React.useMemo(() => dataArr, []);
+  const data = React.useMemo(() => dataArr, [dataArr]);
   const columns: any = React.useMemo(() => columnsArr, []);
   const [currentIndex, setCurrentIndex] = React.useState<null | number>(null);
   const toggleCurrent = (thing: number | null) => setCurrentIndex(thing);
