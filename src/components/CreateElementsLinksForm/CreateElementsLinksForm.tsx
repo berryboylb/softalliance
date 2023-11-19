@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Styles from "../CreateElementForm/css/styles.module.css";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -9,7 +9,10 @@ import Spinner from "../Spinner/Spinner";
 import { add } from "../../store/reducers/elementslink-reducer";
 import { useAppDispatch } from "../../store/hooks";
 import { useParams } from "react-router-dom";
-const lookupSchema = z.object({
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { handleBeforeUnload } from "../../utils";
+export const lookupSchema = z.object({
   lookupId: z.number(),
   lookupValueId: z.number(),
 });
@@ -23,6 +26,12 @@ const CreateElementsLinksForm = ({
 }) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   const formSchema = z
     .object({
       name: z.string().min(3),
@@ -199,6 +208,7 @@ const CreateElementsLinksForm = ({
     reset();
     toggle();
     toggleSecond();
+     window.removeEventListener("beforeunload", handleBeforeUnload);
   };
   const [checked, setChecked] = useState(false);
   const handleToggle = () =>
@@ -892,11 +902,19 @@ const CreateElementsLinksForm = ({
               <div
                 className={
                   index !== activeStep
-                    ? Styles.md_step_circle_active
+                    ? activeStep > index
+                      ? Styles.md_step_passed
+                      : Styles.md_step_circle_active
                     : Styles.md_step_circle_normal
                 }
               >
-                <span>{index + 1}</span>
+                <span>
+                  {activeStep > index ? (
+                    <FontAwesomeIcon icon={faCheck} />
+                  ) : (
+                    index + 1
+                  )}
+                </span>
               </div>
 
               <div

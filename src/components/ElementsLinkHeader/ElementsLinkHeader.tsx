@@ -5,20 +5,28 @@ import LiveSearch from "../LiveSearch/LiveSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useAppSelector } from "../../store/hooks";
-import { Elements } from "../../store/reducers/elements-reducer";
-
-export default function ElementsLinkHeader({ toggle }: { toggle: () => void }) {
-  const { elements } = useAppSelector((state) => state.elements);
-  const [selected, setSelected] = React.useState<Elements>();
+import { ElementsLink } from "../../store/reducers/elementslink-reducer";
+type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
+export default function ElementsLinkHeader({
+  toggle,
+  handleSelect,
+  selected,
+}: {
+  toggle: () => void;
+  selected: ElementsLink | undefined;
+  handleSelect: (val: ElementsLink | undefined) => void;
+}) {
+  const { elementsLink } = useAppSelector((state) => state.elementsLink);
   const [searchResults, setSearchResults] =
-    React.useState<Array<Elements> | null>([]);
-  const handleChange = (e: any) => {
+    React.useState<Array<ElementsLink> | null>([]);
+
+  const handleChange: changeHandler = (e) => {
     const { target } = e;
     if (!target.value.trim()) return setSearchResults([]);
-    if (elements && elements.length > 0) {
-      console.log(elements);
-      const filteredValue = elements.filter((result) =>
-        result.name.toLowerCase().includes(target.value)
+    if (selected) handleSelect(undefined);
+    if (elementsLink && elementsLink.length > 0) {
+      const filteredValue = elementsLink.filter((result) =>
+        result.name.toLowerCase().includes(target.value.toLowerCase())
       );
       setSearchResults(filteredValue);
     }
@@ -33,7 +41,7 @@ export default function ElementsLinkHeader({ toggle }: { toggle: () => void }) {
             onChange={handleChange}
             onSelect={(item: any) => {
               console.log(item);
-              setSelected(item);
+              handleSelect(item);
             }}
             value={selected?.name}
             onSubmit={() => {

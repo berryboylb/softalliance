@@ -9,10 +9,14 @@ import { get, deleteOne } from "../../store/reducers/elementslink-reducer";
 import Table from "../elementLinkTable/ElementLinkTable";
 import { elementLinkAccessor } from "../../constants";
 import SingleElementDetails from "../SingleElementPopup/SingleElementPopup";
+import { ElementsLink } from "../../store/reducers/elementslink-reducer";
+import Pagination from "../pagination/pagination";
 const SuccessComp = lazy(() => import("../Success/Success"));
 const DeleteComp = lazy(() => import("../Delete/Delete"));
 const Empty = lazy(() => import("../EmptyElement/EmptyElement"));
-const Form = lazy(() => import("../CreateElementsLinksForm/CreateElementsLinksForm"));
+const Form = lazy(
+  () => import("../CreateElementsLinksForm/CreateElementsLinksForm")
+);
 const EditForm = lazy(() => import("../EditElementLink/EditElementLink"));
 const ElementLinks = () => {
   const { id } = useParams();
@@ -20,10 +24,42 @@ const ElementLinks = () => {
   const { loading, elementsLink } = useAppSelector(
     (state) => state.elementsLink
   );
-  const options = useMemo(
-    () => elementsLink && elementsLink.length > 0 && elementsLink,
-    [elementsLink]
-  );
+  //search
+  const [selected, setSelected] = useState<ElementsLink>();
+  const handleSelect = (val: ElementsLink | undefined) => setSelected(val);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [postsPerPage] = useState<number>(3);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const previousPage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = () => {
+    if (
+      currentPage !==
+      Math.ceil(elementsLink ? elementsLink?.length : 0 / postsPerPage)
+    ) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  const options = useMemo(() => {
+    if (selected) return [{ ...selected }];
+
+    return (
+      elementsLink &&
+      elementsLink.length > 0 &&
+      elementsLink.slice(indexOfFirstPost, indexOfLastPost)
+    );
+  }, [elementsLink, selected, currentPage]);
   useEffect(() => {
     if (id) dispatch(get(id));
   }, [id, dispatch]);
@@ -37,32 +73,46 @@ const ElementLinks = () => {
   const handleLinkChange = (val: null | string) => {
     setLinkId(val);
   };
-
   const [edit, setEdit] = useState<boolean>(false);
   const toggleEdit = () => setEdit((k) => !k);
   const [editSuccess, setEditSuccess] = useState<boolean>(false);
-   const toggleEditSuccess = () => setEditSuccess((k) => !k);
+  const toggleEditSuccess = () => setEditSuccess((k) => !k);
   const [deleteSuccess, setDeleteSuccess] = useState<boolean>(false);
   const toggleDeleteSuccess = () => setDeleteSuccess((k) => !k);
-  
+
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
   const toggleDeleteConfirm = () => setDeleteConfirm((k) => !k);
   return (
     <div>
       <h2 className={Styles.title}>Element Links</h2>
-      <ElementsLinkHeader toggle={toggle} />
+      <ElementsLinkHeader
+        selected={selected}
+        handleSelect={handleSelect}
+        toggle={toggle}
+      />
       {!loading && options && options.length > 0 ? (
-        <Table
-          columnsArr={elementLinkAccessor}
-          dataArr={options}
-          toggle={togglePopup}
-          handleLinkChange={handleLinkChange}
-          toggleDeleteConfirm={toggleDeleteConfirm}
-          toggleEdit={toggleEdit}
-        />
+        <>
+          <Table
+            columnsArr={elementLinkAccessor}
+            dataArr={options}
+            toggle={togglePopup}
+            handleLinkChange={handleLinkChange}
+            toggleDeleteConfirm={toggleDeleteConfirm}
+            toggleEdit={toggleEdit}
+          />
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={elementsLink?.length || 0}
+            previousPage={previousPage}
+            nextPage={nextPage}
+            currentPage={currentPage}
+            paginate={paginate}
+          />
+        </>
       ) : (
         <Empty text="There are no element links to display" />
       )}
+
       {popup && <SingleElementDetails linkId={linkId} toggle={togglePopup} />}
       <Modal modalIsOpen={modalIsOpen} closeModal={toggle}>
         <Form toggle={toggle} toggleSecond={toggleSecond} />

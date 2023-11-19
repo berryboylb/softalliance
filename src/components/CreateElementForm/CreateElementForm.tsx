@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Styles from "./css/styles.module.css";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -10,7 +10,12 @@ import { add } from "../../store/reducers/elements-reducer";
 import { useAppDispatch } from "../../store/hooks";
 import Spinner from "../Spinner/Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faChevronUp,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
+import { handleBeforeUnload } from "../../utils";
 const CreateElementForm = ({
   toggle,
   toggleSecond,
@@ -20,6 +25,12 @@ const CreateElementForm = ({
 }) => {
   const dispatch = useAppDispatch();
   const { payrun, classification, category } = useDataFetching();
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   const formSchema = z
     .object({
@@ -128,6 +139,7 @@ const CreateElementForm = ({
     reset();
     toggle();
     toggleSecond();
+    window.removeEventListener("beforeunload", handleBeforeUnload);
   };
 
   const [checked, setChecked] = useState(false);
@@ -673,11 +685,19 @@ const CreateElementForm = ({
               <div
                 className={
                   index !== activeStep
-                    ? Styles.md_step_circle_active
+                    ? activeStep > index
+                      ? Styles.md_step_passed
+                      : Styles.md_step_circle_active
                     : Styles.md_step_circle_normal
                 }
               >
-                <span>{index + 1}</span>
+                <span>
+                  {activeStep > index ? (
+                    <FontAwesomeIcon icon={faCheck} />
+                  ) : (
+                    index + 1
+                  )}
+                </span>
               </div>
 
               <div

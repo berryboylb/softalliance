@@ -77,7 +77,10 @@ const useFetchData = (
   }, [dispatch, gradeId]);
 
   useEffect(() => {
-    if (subId) dispatch(getDepts(subId));
+    if (subId) {
+      console.log("subId");
+      dispatch(getDepts(subId));
+    } 
   }, [dispatch, subId]);
   return {
     subOrganization,
@@ -85,7 +88,7 @@ const useFetchData = (
     jobtitle,
     location,
     employeeType,
-      employeeCategory,
+    employeeCategory,
     grades,
     steps,
     union,

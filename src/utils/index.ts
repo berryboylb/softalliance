@@ -27,3 +27,9 @@ export function convertDateFormatOnly(inputDate: string): string {
   return `${formattedDate}`;
 }
 
+
+export const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  const message = "Are you sure you want to leave?";
+  event.returnValue = message;
+  return message;
+};

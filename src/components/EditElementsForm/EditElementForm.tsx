@@ -15,6 +15,8 @@ import {
   faChevronUp,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { handleBeforeUnload } from "../../utils";
 const EditElementForm = ({
   toggle,
   toggleSecond,
@@ -24,6 +26,12 @@ const EditElementForm = ({
   toggleSecond: () => void;
   linkId: null | string;
 }) => {
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   const dispatch = useAppDispatch();
   const { loading, singleElement } = useAppSelector((state) => state.elements);
   useEffect(() => {
@@ -117,11 +125,11 @@ const EditElementForm = ({
     }
   }, [singleElement]);
 
-   useEffect(() => {
-     if (singleElement?.effectiveEndDate) {
-       setValue("effectiveEndDate", singleElement?.effectiveEndDate);
-     }
-   }, [singleElement]);
+  useEffect(() => {
+    if (singleElement?.effectiveEndDate) {
+      setValue("effectiveEndDate", singleElement?.effectiveEndDate);
+    }
+  }, [singleElement]);
 
   useEffect(() => {
     if (singleElement?.effectiveStartDate) {
@@ -162,6 +170,7 @@ const EditElementForm = ({
     reset();
     toggle();
     toggleSecond();
+    window.removeEventListener("beforeunload", handleBeforeUnload);
   };
 
   const [checked, setChecked] = useState(
@@ -247,7 +256,6 @@ const EditElementForm = ({
             Element Classification
           </label>
           <select
-            defaultValue={singleElement?.classificationValueId}
             placeholder="Select Classification"
             className={`${Styles.select} ${
               errors.classificationValueId &&
@@ -259,24 +267,18 @@ const EditElementForm = ({
               required: "This is required.",
               valueAsNumber: true,
             })}
+            defaultValue={singleElement?.classificationValueId}
           >
-            <option value={singleElement?.classificationValueId}>
-              {classification &&
-                classification.length > 0 &&
-                classification?.find(
-                  (item) =>
-                    String(item.id) ===
-                    String(singleElement?.classificationValueId)
-                )?.name}
-            </option>
+            <option value={""}>Select Classification</option>
+
             {classification &&
               classification.length > 0 &&
               classification
-                .filter(
-                  (item) =>
-                    String(item.id) !==
-                    String(singleElement?.classificationValueId)
-                )
+                // .filter(
+                //   (item) =>
+                //     String(item.id) !==
+                //     String(singleElement?.classificationValueId)
+                // )
                 .map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.name}
@@ -296,7 +298,6 @@ const EditElementForm = ({
             Element Category
           </label>
           <select
-            defaultValue={singleElement?.categoryValueId}
             disabled={!currentClassificationId ? true : false}
             className={`${Styles.select} ${
               errors.categoryValueId &&
@@ -308,22 +309,24 @@ const EditElementForm = ({
               required: "This is required.",
               valueAsNumber: true,
             })}
+            defaultValue={Number(singleElement?.categoryValueId)}
           >
-            <option value={singleElement?.categoryValueId}>
-              {filteredCategory &&
+            <option value={""}>
+              {/* {filteredCategory &&
                 filteredCategory.length > 0 &&
                 filteredCategory?.find(
                   (item) =>
                     String(item.id) === String(singleElement?.categoryValueId)
-                )?.name}
+                )?.name} */}
+              Select Category
             </option>
             {filteredCategory &&
               filteredCategory.length > 0 &&
               filteredCategory
-                .filter(
-                  (item) =>
-                    String(item.id) !== String(singleElement?.categoryValueId)
-                )
+                // .filter(
+                //   (item) =>
+                //     String(item.id) !== String(singleElement?.categoryValueId)
+                // )
                 .map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.name}
@@ -343,7 +346,7 @@ const EditElementForm = ({
             Payrun
           </label>
           <select
-            defaultValue={singleElement?.payRunValueId}
+            defaultValue={Number(singleElement?.payRunValueId)}
             className={`${Styles.select} ${
               errors.payRunValueId &&
               errors.payRunValueId.message &&
@@ -356,21 +359,22 @@ const EditElementForm = ({
               valueAsNumber: true,
             })}
           >
-            <option value={singleElement?.payRunValueId}>
-              {payrun &&
+            <option value={""}>
+              {/* {payrun &&
                 payrun.length > 0 &&
                 payrun?.find(
                   (item) =>
                     String(item.id) === String(singleElement?.payRunValueId)
-                )?.name}
+                )?.name} */}
+              Select Payrun
             </option>
             {payrun &&
               payrun.length > 0 &&
               payrun
-                .filter(
-                  (item) =>
-                    String(item.id) !== String(singleElement?.payRunValueId)
-                )
+                // .filter(
+                //   (item) =>
+                //     String(item.id) !== String(singleElement?.payRunValueId)
+                // )
                 .map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.name}
@@ -791,7 +795,6 @@ const EditElementForm = ({
 
   return (
     <div>
-      {linkId ? linkId : "null"}
       <h2 className={Styles.title}>Edit Element</h2>
       {loading && <Spinner toggle={false} />}
       {!loading && singleElement && (
@@ -817,11 +820,20 @@ const EditElementForm = ({
                 <div
                   className={
                     index !== activeStep
-                      ? Styles.md_step_circle_active
+                      ? activeStep > index
+                        ? Styles.md_step_passed
+                        : Styles.md_step_circle_active
                       : Styles.md_step_circle_normal
                   }
                 >
-                  <span>{index + 1}</span>
+                  <span>
+                    {" "}
+                    {activeStep > index ? (
+                      <FontAwesomeIcon icon={faCheck} />
+                    ) : (
+                      index + 1
+                    )}
+                  </span>
                 </div>
 
                 <div

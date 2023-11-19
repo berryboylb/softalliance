@@ -25,11 +25,12 @@ const Select = ({
           paginate(Number(e.target.value));
         }}
         value={currentPage}
+
       >
         {total &&
           total.length > 0 &&
           total
-            .map((item) => <option value={item}>{item}</option>)}
+            .map((item) => <option key={item} value={item}>{item}</option>)}
       </select>
       <span>out of {total?.length}</span>
     </div>

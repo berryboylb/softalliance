@@ -39,11 +39,13 @@ export default function Elements() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
 
   const paginate = (pageNumber: number) => {
+    handleSelect(undefined);
     setCurrentPage(pageNumber);
   };
 
   const previousPage = () => {
     if (currentPage !== 1) {
+      handleSelect(undefined);
       setCurrentPage(currentPage - 1);
     }
   };
@@ -55,12 +57,12 @@ export default function Elements() {
         elements.elements ? elements.elements?.length : 0 / postsPerPage
       )
     ) {
+      handleSelect(undefined);
       setCurrentPage(currentPage + 1);
     }
   };
   const options = useMemo(() => {
     if (selected) {
-      console.log(selected);
       return [{ ...selected }];
     }
 
@@ -68,10 +70,6 @@ export default function Elements() {
       elements.elements &&
       elements.elements.length > 0 &&
       elements.elements.slice(indexOfFirstPost, indexOfLastPost)
-      // Array.from({ length: totalItems }, (_, index) => index + 1).slice(
-      //   (currentPage - 1) * itemsPerPage,
-      //   currentPage * itemsPerPage
-      // )
     );
   }, [elements.elements, selected, currentPage]);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);

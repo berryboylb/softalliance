@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { baseUrl } from "../../constants";
 
-type ElementsLink = {
+export type ElementsLink = {
   id: string;
   name: string;
   elementId: number;
@@ -22,10 +22,10 @@ type ElementsLink = {
   amountType: string;
   amount: number;
   rate: number;
-  effectiveStartDate: string;
-  effectiveEndDate: string;
-  status: string;
-  automate: string;
+  effectiveStartDate?: string;
+  effectiveEndDate?: string;
+  status?: "active" | "inactive";
+  automate?: "yes" | "no";
   createdAt: string;
   additionalInfo: [
     {
@@ -75,32 +75,34 @@ export const get = createAsyncThunk("elementLink/get", async (id: string) => {
 
 type IElement = {
   id: number;
-  body: any | {
-    name: string;
-    suborganizationId?: number;
-    locationId?: number;
-    departmentId?: number;
-    employeeCategoryId: number;
-    employeeCategoryValueId?: number;
-    employeeTypeId: number;
-    employeeTypeValueId?: number;
-    jobTitleId?: number;
-    grade?: number;
-    gradeStep?: number;
-    unionId?: number;
-    amountType: string;
-    amount?: number;
-    rate?: number;
-    effectiveStartDate?: string;
-    effectiveEndDate?: string;
-    status?: string;
-    automate: string;
-    modifiedBy: string;
-    additionalInfo?: Array<{
-      lookupId: number;
-      lookupValueId: number;
-    }>;
-  }
+  body:
+    | any
+    | {
+        name: string;
+        suborganizationId?: number;
+        locationId?: number;
+        departmentId?: number;
+        employeeCategoryId: number;
+        employeeCategoryValueId?: number;
+        employeeTypeId: number;
+        employeeTypeValueId?: number;
+        jobTitleId?: number;
+        grade?: number;
+        gradeStep?: number;
+        unionId?: number;
+        amountType: string;
+        amount?: number;
+        rate?: number;
+        effectiveStartDate?: string;
+        effectiveEndDate?: string;
+        status?: string;
+        automate: string;
+        modifiedBy: string;
+        additionalInfo?: Array<{
+          lookupId: number;
+          lookupValueId: number;
+        }>;
+      };
 };
 
 export const add = createAsyncThunk(
@@ -159,6 +161,7 @@ export const getById = createAsyncThunk(
 type Update = {
   id: string;
   elementId: string;
+  body: any | ElementsLink;
 };
 export const update = createAsyncThunk(
   "elementLink/update",
@@ -166,7 +169,7 @@ export const update = createAsyncThunk(
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    const body = JSON.stringify(values);
+    const body = JSON.stringify(values.body);
     try {
       const res = await axios.put(
         `${baseUrl}/elements/${values.id}/elementlinks/${values.elementId}`,
@@ -174,7 +177,7 @@ export const update = createAsyncThunk(
         config
       );
       toast.success(res.data.message);
-      // return res.data;
+      return res.data.data;
     } catch (err) {
       if (err instanceof Error) {
         console.log(err.message);
@@ -224,7 +227,10 @@ const ElementLinkSlice = createSlice({
       add.fulfilled,
       (state, action: PayloadAction<ElementsLink>) => {
         state.loading = false;
-        state.elementsLink = state.elementsLink && state.elementsLink.length > 0 ? [...state.elementsLink, action.payload] : state.elementsLink;
+        state.elementsLink =
+          state.elementsLink && state.elementsLink.length > 0
+            ? [...state.elementsLink, action.payload]
+            : state.elementsLink;
       }
     );
     builder.addCase(add.rejected, (state, action: PayloadAction<unknown>) => {
@@ -282,7 +288,14 @@ const ElementLinkSlice = createSlice({
       update.fulfilled,
       (state, action: PayloadAction<ElementsLink>) => {
         state.loading = false;
-        state.singleElementLink = action.payload;
+        const newArr = state.elementsLink
+          ? state.elementsLink.map((item) =>
+              String(item.id) === String(action.payload.id)
+                ? { ...action.payload }
+                : item
+            )
+          : [];
+        state.elementsLink = newArr;
       }
     );
     builder.addCase(

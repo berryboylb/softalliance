@@ -74,6 +74,22 @@
     align-items: center;
 }
 
+.md_step_passed {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    font-size: .875rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: rgba(75, 170, 121, 1) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .step_title_active {
     text-align: center;
     font-size: 1rem;
@@ -389,8 +405,8 @@
     margin-top: 1rem;
 }
 
-.selected_{
-    border:  1px solid rgba(229, 229, 229, 1);
+.selected_ {
+    border: 1px solid rgba(229, 229, 229, 1);
     margin-top: 1rem;
     padding-left: .5rem;
     padding-right: .5rem;
@@ -408,7 +424,7 @@
 
         font-size: .75rem;
 
-        li{
+        li {
             background: rgba(231, 231, 231, 1);
             color: rgba(45, 65, 111, 1);
             padding: .5rem;
@@ -419,17 +435,18 @@
             ._icon_ {
                 margin-left: .5rem;
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                     color: rgba(224, 84, 83, 1);
                 }
             }
         }
     }
 
-    div{
+    div {
 
         button {
-            border : none;
+            border: none;
             background: none;
             color: rgba(129, 141, 169, 1);
             font-size: .6rem;
@@ -493,22 +510,22 @@
         grid-template-columns: repeat(5, 1fr);
     }
 
-        .selected_ {
-    
-            ul {
-    
-                font-size: .875rem;
-    
-            }
-    
-            div {
-    
-                button {
-                    font-size: .75rem;
-    
-                }
-    
-            }
+    .selected_ {
+
+        ul {
+
+            font-size: .875rem;
+
         }
+
+        div {
+
+            button {
+                font-size: .75rem;
+
+            }
+
+        }
+    }
 
 }

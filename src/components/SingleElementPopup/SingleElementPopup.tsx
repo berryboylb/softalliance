@@ -7,85 +7,39 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getById } from "../../store/reducers/elementslink-reducer";
 import Spinner from "../Spinner/Spinner";
-import { baseUrl } from "../../constants";
-import axios from "axios";
 import { useMemo } from "react";
 import { convertDateFormatOnly } from "../../utils";
-
-const department = async (subId: string, depId: string) => {
-  try {
-    const res = await axios.get(
-      `${baseUrl}/suborganizations/${subId}/departments/${depId}`
-      );
-     
-    return res.data.data.name;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.log(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      console.log(err.response.data);
-      return err.response.data.message;
+import useFetchData from "../CreateElementsLinksForm/useFetchData";
+type Custom = {
+  id: string;
+  name: string;
+  elementId: number;
+  suborganizationId: string;
+  locationId: string;
+  departmentId: string;
+  employeeCategoryId: number;
+  employeeCategoryValueId: string;
+  employeeTypeId: number;
+  employeeTypeValueId: string;
+  jobTitleId: number;
+  grade: string;
+  gradeStep: string;
+  unionId: number;
+  amountType: string;
+  amount: number;
+  rate: number;
+  effectiveStartDate: string;
+  effectiveEndDate: string;
+  status: string;
+  automate: string;
+  createdAt: string;
+  additionalInfo: [
+    {
+      lookupId: number;
+      lookupValueId: number;
     }
-  }
+  ];
 };
-const subOrganization = async (id: string) => {
-  try {
-    const res = await axios.get(`${baseUrl}/suborganizations/${id}`);
-    return res.data.data.name;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.log(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      console.log(err.response.data);
-      return err.response.data.message;
-    }
-  }
-};
-
-const lookoup = async (main: string, sub: string) => {
-  try {
-    const res = await axios.get(
-      `${baseUrl}/lookups/${main}/lookupvalues/${sub}`
-      );
-       console.log("hdshdh",res.data);
-    return res.data.data.name;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.log(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      console.log(err.response.data);
-      return err.response.data.message;
-    }
-  }
-};
-
-const grade = async (id: string) => {
-  try {
-    const res = await axios.get(`${baseUrl}/grade/${id}`);
-    return res.data.data.name;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.log(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      console.log(err.response.data);
-      return err.response.data.message;
-    }
-  }
-};
-const gradeStep = async (gradeId: string, id: string) => {
-  try {
-    const res = await axios.get(`${baseUrl}/grade/${gradeId}/gradesteps/${id}`);
-    return res.data.data.name;
-  } catch (err) {
-    if (err instanceof Error) {
-      console.log(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      console.log(err.response.data);
-      return err.response.data.message;
-    }
-  }
-};
-
 const SingleElementPopup = ({
   toggle,
   linkId,
@@ -95,6 +49,7 @@ const SingleElementPopup = ({
 }) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (id && linkId) dispatch(getById({ id, elementId: linkId }));
   }, [id, linkId, dispatch]);
@@ -103,50 +58,75 @@ const SingleElementPopup = ({
     (state) => state.elementsLink
   );
 
-  const [datas, setDatas] = useState(singleElementLink);
-
+  const [datas, setDatas] = useState<Custom>();
+  const {
+    subOrganization,
+    department,
+    employeeType,
+    employeeCategory,
+    grades,
+    steps: stepper,
+    location,
+  } = useFetchData(
+    singleElementLink?.suborganizationId,
+    singleElementLink?.grade
+  );
   useEffect(() => {
     const fetchData = async () => {
-        if (singleElementLink) {
-          console.log("hi", singleElementLink);
-        const deptValue = await department(
-          String(singleElementLink.suborganizationId),
-          String(singleElementLink.departmentId)
-        );
-        const gradeValue = await grade(String(singleElementLink.grade));
-        const gradeStepValue = await gradeStep(
-          String(singleElementLink.grade),
-          String(singleElementLink.gradeStep)
-        );
-
-        const categoryValue = await lookoup(
-          String(singleElementLink.employeeCategoryId),
-          String(singleElementLink.employeeCategoryValueId)
-        );
-
-        const typeValue = await lookoup(
-          String(singleElementLink.employeeTypeId),
-          String(singleElementLink.employeeTypeValueId)
-        );
-
-        const subValue = await subOrganization(
-          String(singleElementLink.suborganizationId)
-        );
+      if (singleElementLink) {
         const updatedData = {
           ...singleElementLink,
-          departmentId: deptValue ? deptValue : "N/A",
-          grade: gradeValue ? gradeValue : "N/A",
-          gradeStep: gradeStepValue ? gradeStepValue : "N/A",
-          employeeCategoryValueId: categoryValue ? categoryValue : "N/A",
-          employeeTypeValueId: typeValue ? typeValue : "N/A",
-          suborganizationId: subValue ? subValue : "N/A",
+          departmentId:
+            department?.find(
+              (item) =>
+                Number(item.id) === Number(singleElementLink?.departmentId)
+            )?.name || "N/A",
+          grade:
+            grades?.find(
+              (item) => Number(item.id) === Number(singleElementLink?.grade)
+            )?.name || "N/A",
+          gradeStep:
+            stepper?.find(
+              (item) => Number(item.id) === Number(singleElementLink?.gradeStep)
+            )?.name || "N/A",
+          employeeCategoryValueId:
+            employeeCategory?.find(
+              (item) =>
+                Number(item.id) ===
+                Number(singleElementLink?.employeeCategoryValueId)
+            )?.name || "N/A",
+          employeeTypeValueId:
+            employeeType?.find(
+              (item) =>
+                Number(item.id) ===
+                Number(singleElementLink?.employeeTypeValueId)
+            )?.name || "N/A",
+          suborganizationId:
+            subOrganization?.find(
+              (item) =>
+                Number(item.id) === Number(singleElementLink?.suborganizationId)
+            )?.name || "N/A",
+          locationId:
+            location?.find(
+              (item) =>
+                Number(item.id) === Number(singleElementLink?.locationId)
+            )?.name || "N/A",
         };
         setDatas(updatedData);
       }
     };
 
     fetchData();
-  }, [singleElementLink]);
+  }, [
+    singleElementLink,
+    department,
+    location,
+    subOrganization,
+    employeeType,
+    employeeCategory,
+    stepper,
+    grades,
+  ]);
 
   const data = useMemo(() => datas, [datas]);
   return (
@@ -240,12 +220,21 @@ const SingleElementPopup = ({
             <div className={Style.taby}>
               <div className={Style.left}>
                 <label className={Style.label}>PENSION</label>
-                <p className={Style.para}>N/A</p>
+                <p className={Style.para}>
+                  {data.additionalInfo?.find(
+                    (item) => Number(item.lookupId) === 10
+                  )?.lookupValueId || "N/A"}
+                </p>
               </div>
 
               <div className={Style.right}>
                 <label className={Style.label}>Housing</label>
-                <p className={Style.para}>N/A</p>
+                <p className={Style.para}>
+                  {" "}
+                  {data.additionalInfo?.find(
+                    (item) => Number(item.lookupId) === 9
+                  )?.lookupValueId || "N/A"}
+                </p>
               </div>
             </div>
 

@@ -48,16 +48,27 @@ const Index: React.FC<Props> = ({
   const [datas, setDatas] = useState(dataArr);
   useEffect(() => {
     const fetchData = async () => {
-      const updatedData = await Promise.all(
-        dataArr.map(async (item) => ({
-          ...item,
-          departmentId: await getById(
-            item.suborganizationId,
-            item.departmentId
-          ),
-        }))
-      );
-      setDatas(updatedData);
+      if (dataArr) {
+        const updatedData = await Promise.all(
+          dataArr.map(async (item) => {
+            if (item.suborganizationId && item.departmentId) {
+              const departmentId = await getById(
+                item.suborganizationId,
+                item.departmentId
+              );
+              return {
+                ...item,
+                departmentId,
+              }
+            }
+            return {
+              ...item,
+              departmentId: null,
+            };
+          })
+        );
+        setDatas(updatedData);
+      }
     };
 
     fetchData();

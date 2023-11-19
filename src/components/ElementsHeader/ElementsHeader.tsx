@@ -7,6 +7,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Filter } from "../../assets";
 import { useAppSelector } from "../../store/hooks";
 import { Elements } from "../../store/reducers/elements-reducer";
+type changeHandler = React.ChangeEventHandler<HTMLInputElement>;
 export default function EleemntsHeader({
   toggle,
   handleSelect,
@@ -17,20 +18,16 @@ export default function EleemntsHeader({
   handleSelect: (val: Elements | undefined) => void;
 }) {
   const { elements } = useAppSelector((state) => state.elements);
-  // const [selected, setSelected] = React.useState<Elements>();
   const [searchResults, setSearchResults] =
     React.useState<Array<Elements> | null>([]);
-  const handleChange = (e: any) => {
+  const handleChange: changeHandler = (e) => {
     const { target } = e;
     if (!target.value.trim()) return setSearchResults([]);
-    if (selected) {
-      handleSelect(undefined);
-    }
+    if (selected) handleSelect(undefined);
     if (elements && elements.length > 0) {
       const filteredValue = elements.filter((result) =>
         result.name.toLowerCase().includes(target.value.toLowerCase())
       );
-      console.log("filteredValue", filteredValue);
       setSearchResults(filteredValue);
     }
   };
