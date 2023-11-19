@@ -38,7 +38,7 @@ const CreateElementsLinksForm = ({
       amountType: z.enum(["fixed", "rated"]),
       amount: z.number().positive().optional(),
       rate: z.number().positive().optional(),
-      status: z.enum(["active", "inactive"]).optional(),
+      status: z.enum(["active", "inactive"]).or(z.literal("")).optional(),
       automate: z.enum(["yes", "no"]).optional(),
       suborganizationId: z.number().positive().optional(),
       departmentId: z.number().positive().optional(),
@@ -757,11 +757,8 @@ const CreateElementsLinksForm = ({
         </div>
       </div>
       <div className={Styles.con}>
-        <div
-          className={`${Styles.item} ${
-            errors.automate && errors.automate.message && Styles.highlight
-          }`}
-        >
+        <div className={`${Styles.item} `}>
+          {watch("automate")}
           <label htmlFor="Automate" className={Styles.label}>
             Automate
           </label>
@@ -775,10 +772,14 @@ const CreateElementsLinksForm = ({
               <input
                 type="radio"
                 value="yes"
-                {...(register("automate"),
-                {
-                  setValueAs: (v: string) => (v === "" ? undefined : v),
-                })}
+                onChange={(e) => {
+                  setValue(
+                    "automate",
+                    e.target.value as unknown as "yes" | "no" | undefined
+                  );
+                }}
+                checked={watch("automate") === "yes"}
+                // {...(register("automate"))}
               />
             </label>{" "}
             <label>
@@ -786,10 +787,13 @@ const CreateElementsLinksForm = ({
               <input
                 type="radio"
                 value="no"
-                {...(register("automate"),
-                {
-                  setValueAs: (v: string) => (v === "" ? undefined : v),
-                })}
+                onChange={(e) => {
+                  setValue(
+                    "automate",
+                    e.target.value as unknown as "yes" | "no" | undefined
+                  );
+                }}
+                checked={watch("automate") === "no"}
               />
             </label>
           </div>

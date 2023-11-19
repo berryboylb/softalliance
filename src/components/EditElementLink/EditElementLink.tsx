@@ -849,11 +849,14 @@ const EditElementLink = ({
               <input
                 type="radio"
                 value="yes"
-                {...(register("automate"),
-                {
-                  setValueAs: (v: string) => (v === "" ? undefined : v),
-                })}
-                defaultChecked={singleElementLink?.automate === "yes"}
+                onChange={(e) => {
+                  setValue(
+                    "automate",
+                    e.target.value as unknown as "yes" | "no" | undefined
+                  );
+                }}
+                 checked={watch("automate") === "yes"}
+                defaultChecked={watch("automate") === "yes"}
               />
             </label>{" "}
             <label>
@@ -861,11 +864,14 @@ const EditElementLink = ({
               <input
                 type="radio"
                 value="no"
-                {...(register("automate"),
-                {
-                  setValueAs: (v: string) => (v === "" ? undefined : v),
-                })}
-                defaultChecked={singleElementLink?.automate === "no"}
+                onChange={(e) => {
+                  setValue(
+                    "automate",
+                    e.target.value as unknown as "yes" | "no" | undefined
+                  );
+                }}
+                checked={watch("automate") === "no"}
+                defaultChecked={watch("automate") === "no"}
               />
             </label>
           </div>
@@ -956,11 +962,11 @@ const EditElementLink = ({
   };
   return (
     <>
-      <h2 className={Styles.title}>Edit Element Link</h2>{" "}
+      {JSON.stringify(singleElementLink)}
       {loading && <Spinner toggle={false} />}
       {!loading && singleElementLink ? (
         <div>
-          <h2 className={Styles.title}>Create Element Link</h2>
+          <h2 className={Styles.title}>Edit Element Link</h2>{" "}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={Styles.step}>
               {steps.map((step, index) => (
