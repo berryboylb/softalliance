@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Styles from "../CreateElementForm/css/styles.module.css";
 import { getById, update } from "../../store/reducers/elementslink-reducer";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -170,15 +170,12 @@ const EditElementLink = ({
   useEffect(() => {
     if (singleElementLink?.status)
       setValue("status", singleElementLink?.status);
-
   }, [singleElementLink, setValue]);
 
-   useEffect(() => {
-     if (singleElementLink?.status)
-       setValue("automate", singleElementLink?.automate);
-   }, [singleElementLink, setValue]);
-
-  
+  useEffect(() => {
+    if (singleElementLink?.status)
+      setValue("automate", singleElementLink?.automate);
+  }, [singleElementLink, setValue]);
 
   const subOrganizationid = watch("suborganizationId");
   const deptId = watch("departmentId");
@@ -242,9 +239,7 @@ const EditElementLink = ({
       employeeCategoryId: 3,
       employeeTypeId: 4,
     };
-    dispatch(
-      update({ id: String(id), elementId: String(linkId), body })
-    );
+    dispatch(update({ id: String(id), elementId: String(linkId), body }));
     reset();
     toggle();
     toggleSecond();

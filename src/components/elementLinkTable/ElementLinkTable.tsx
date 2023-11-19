@@ -59,7 +59,7 @@ const Index: React.FC<Props> = ({
               return {
                 ...item,
                 departmentId,
-              }
+              };
             }
             return {
               ...item,
@@ -79,12 +79,16 @@ const Index: React.FC<Props> = ({
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
 
-  const getName = (
-    id: string,
-    arr: Array<SubOrganization> | Array<LookupValues>
-  ) => {
+  const getName = (id: string, arr: Array<SubOrganization>) => {
     if (!arr || arr.length < 0) return "N/A";
-    const item = arr.find((item) => item.id === id);
+    const item = arr.find((item: SubOrganization) => item.id === id);
+    if (!item) return "N/A";
+    return item.name;
+  };
+
+  const getLookupName = (id: string, arr: Array<LookupValues>) => {
+    if (!arr || arr.length < 0) return "N/A";
+    const item = arr.find((item: LookupValues) => item.id === id);
     if (!item) return "N/A";
     return item.name;
   };
@@ -135,7 +139,7 @@ const Index: React.FC<Props> = ({
                               <>
                                 {cell.column.id ===
                                 "employeeCategoryValueId" ? (
-                                  getName(
+                                  getLookupName(
                                     String(cell.value),
                                     employeeCategory ? employeeCategory : []
                                   )

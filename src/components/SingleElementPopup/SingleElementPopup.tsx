@@ -28,10 +28,10 @@ type Custom = {
   amountType: string;
   amount: number;
   rate: number;
-  effectiveStartDate: string;
-  effectiveEndDate: string;
-  status: string;
-  automate: string;
+  effectiveStartDate?: string;
+  effectiveEndDate?: string;
+  status?: "active" | "inactive";
+  automate?: "yes" | "no";
   createdAt: string;
   additionalInfo: [
     {
@@ -74,7 +74,7 @@ const SingleElementPopup = ({
   useEffect(() => {
     const fetchData = async () => {
       if (singleElementLink) {
-        const updatedData = {
+        const updatedData: Custom = {
           ...singleElementLink,
           departmentId:
             department?.find(
@@ -245,7 +245,9 @@ const SingleElementPopup = ({
                 </label>
                 <p className={Style.para}>
                   {" "}
-                  {convertDateFormatOnly(data?.effectiveStartDate)}
+                  {data?.effectiveStartDate
+                    ? convertDateFormatOnly(data?.effectiveStartDate)
+                    : "N/A"}
                 </p>
               </div>
 
@@ -253,7 +255,9 @@ const SingleElementPopup = ({
                 <label className={Style.label}>Effective End Date</label>
                 <p className={Style.para}>
                   {" "}
-                  {convertDateFormatOnly(data?.effectiveEndDate)}
+                  {data?.effectiveEndDate
+                    ? convertDateFormatOnly(data?.effectiveEndDate)
+                    : "N/A"}
                 </p>
               </div>
             </div>
