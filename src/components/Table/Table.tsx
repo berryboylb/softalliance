@@ -119,8 +119,13 @@ const Index: React.FC<Props> = ({
                                     className={Style.status_}
                                     style={{
                                       background:
-                                        tableBackgroundColors[cell.value],
-                                      color: tableStatusColors[cell.value],
+                                        tableBackgroundColors[
+                                          cell.value.toLowercase()
+                                        ],
+                                      color:
+                                        tableStatusColors[
+                                          cell.value.toLowercase()
+                                        ],
                                     }}
                                   >
                                     {cell.value}

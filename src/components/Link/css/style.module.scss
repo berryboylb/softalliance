@@ -1,0 +1,14 @@
+.details {
+    color: rgba(75, 170, 121, 1);
+    text-decoration: underline;
+    background: none;
+    border: none;
+    outline: none;
+    text-transform: capitalize;
+    font-family: 'poppins';
+    cursor: pointer;
+
+    &:hover {
+        opacity: .8;
+    }
+}

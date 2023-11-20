@@ -1,0 +1,13 @@
+.details {
+  color: rgb(75, 170, 121);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  outline: none;
+  text-transform: capitalize;
+  font-family: "poppins";
+  cursor: pointer;
+}
+.details:hover {
+  opacity: 0.8;
+}/*# sourceMappingURL=style.module.css.map */

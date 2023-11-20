@@ -44,13 +44,17 @@ export const get = createAsyncThunk("elements/get", async () => {
     // console.log("res", res.data.data.content);
     return res.data.data.content;
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.log(err.message);
-      toast.error(err.message);
-    } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-      console.log(err.response.data);
-      return err.response.data.message;
+    if (axios.isAxiosError(err)) {
+      if (Array.isArray(err.response?.data))
+        err.response?.data.map((item) => toast.error(item));
+      else toast.error(err.response?.data);
+    } else {
+      if (err instanceof Error) {
+        console.error(err.message);
+        toast.error(err.message);
+      }
     }
+    return err;
   }
 });
 
@@ -86,13 +90,17 @@ export const add = createAsyncThunk(
       toast.success(res.data.message);
       return res.data.data;
     } catch (err) {
-      if (err instanceof Error) {
-        console.log(err.message);
-        toast.error(err.message);
-      } else if (axios.isAxiosError(err) && err.response?.data?.message) {
-        console.log(err.response.data);
-        return err.response.data.message;
+      if (axios.isAxiosError(err)) {
+        if (Array.isArray(err.response?.data))
+          err.response?.data.map((item) => toast.error(item));
+        else toast.error(err.response?.data);
+      } else {
+        if (err instanceof Error) {
+          console.error(err.message);
+          toast.error(err.message);
+        }
       }
+      return err;
     }
   }
 );
@@ -200,7 +208,7 @@ const ElementsSlice = createSlice({
       get.fulfilled,
       (state, action: PayloadAction<Elements[]>) => {
         state.loading = false;
-        state.elements = action.payload;
+        state.elements = action.payload ? action.payload : [];
       }
     );
     builder.addCase(get.rejected, (state, action: PayloadAction<unknown>) => {
