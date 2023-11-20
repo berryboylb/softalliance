@@ -129,6 +129,7 @@
   }
   .notMobileNav {
     transform: translateX(0%);
+    z-index: auto;
   }
   .logo_expand {
     width: auto;
