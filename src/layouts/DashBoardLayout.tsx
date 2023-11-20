@@ -16,7 +16,6 @@ const item: boolean =
   localStorage.getItem("expand") && JSON.parse(localStorage.expand);
 const choice: string =
   localStorage.getItem("choice") && JSON.parse(localStorage.choice);
-console.log(typeof item);
 const org: string =
   localStorage.getItem("organization") && JSON.parse(localStorage.organization);
 console.log(typeof item);

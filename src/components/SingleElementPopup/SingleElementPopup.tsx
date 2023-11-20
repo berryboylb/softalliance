@@ -187,7 +187,7 @@ const SingleElementPopup = ({
 
               <div className={Style.right}>
                 <label className={Style.label}>Status</label>
-                <p className={Style.para}>{data?.status}</p>
+                <p className={Style.para}>{data?.status ? data?.status : 'N/A'}</p>
               </div>
             </div>
 

@@ -2,6 +2,7 @@
   font-size: 1.2rem;
   color: rgb(45, 65, 111);
   font-weight: bold;
+  text-align: center;
 }
 
 .step {
@@ -53,8 +54,8 @@
 }
 
 .md_step_circle_active {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   margin: 0 auto;
   border-radius: 50%;
   text-align: center;
@@ -69,8 +70,8 @@
 }
 
 .md_step_passed {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   margin: 0 auto;
   border-radius: 50%;
   text-align: center;
@@ -90,6 +91,7 @@
   color: rgb(75, 170, 121);
   font-weight: 900;
   margin-bottom: 0.5rem;
+  display: none;
 }
 .step_title_active:hover {
   color: rgb(129, 141, 169);
@@ -101,6 +103,7 @@
   color: rgb(129, 141, 169);
   font-weight: 900;
   margin-bottom: 0.5rem;
+  display: none;
 }
 .step_title_normal:hover {
   color: rgb(75, 170, 121);
@@ -111,7 +114,7 @@
   left: 50%;
   margin-left: 20px;
   position: absolute;
-  top: 4.8rem;
+  top: 2.4rem;
   height: 2px;
   border-top: 1px solid #DDDDDD;
 }
@@ -121,7 +124,7 @@
   left: 50%;
   margin-left: 20px;
   position: absolute;
-  top: 4.8rem;
+  top: 2.4rem;
   height: 2px;
   border-top: 1px solid rgb(75, 170, 121);
 }
@@ -131,7 +134,7 @@
   right: 50%;
   margin-right: 20px;
   position: absolute;
-  top: 4.8rem;
+  top: 2.4rem;
   height: 2px;
   border-top: 1px solid #DDDDDD;
 }
@@ -141,7 +144,7 @@
   right: 50%;
   margin-right: 20px;
   position: absolute;
-  top: 4.8rem;
+  top: 2.4rem;
   height: 2px;
   border-top: 1px solid rgb(75, 170, 121);
 }
@@ -453,6 +456,11 @@
 @media screen and (min-width: 1024px) {
   .title {
     font-size: 1.5rem;
+    text-align: left;
+  }
+  .step_title_active,
+  .step_title_normal {
+    display: block;
   }
   .md_step_circle_normal {
     width: 40px;
@@ -463,6 +471,14 @@
     width: 40px;
     height: 40px;
     font-size: 1rem;
+  }
+  .md_step_passed {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  .md_step_bar_right, .md_step_bar_right_active, .md_step_bar_left, .md_step_bar_left_active {
+    top: 4.8rem;
   }
   .con,
   .btn__ {

@@ -60,7 +60,6 @@ export const get = createAsyncThunk("elementLink/get", async (id: string) => {
   try {
     const res = await axios.get(`${baseUrl}/elements/${id}/elementlinks`);
     toast.success(res.data.message);
-    console.log(res.data.data);
     return res.data.data;
   } catch (err: unknown) {
     if (err instanceof Error) {

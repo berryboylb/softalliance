@@ -173,8 +173,10 @@ const EditElementLink = ({
   }, [singleElementLink, setValue]);
 
   useEffect(() => {
-    if (singleElementLink?.status)
+    if (singleElementLink && singleElementLink?.automate) {
       setValue("automate", singleElementLink?.automate);
+    }
+      
   }, [singleElementLink, setValue]);
 
   const subOrganizationid = watch("suborganizationId");
@@ -856,7 +858,6 @@ const EditElementLink = ({
                   );
                 }}
                  checked={watch("automate") === "yes"}
-                defaultChecked={watch("automate") === "yes"}
               />
             </label>{" "}
             <label>
@@ -871,7 +872,6 @@ const EditElementLink = ({
                   );
                 }}
                 checked={watch("automate") === "no"}
-                defaultChecked={watch("automate") === "no"}
               />
             </label>
           </div>
@@ -962,7 +962,6 @@ const EditElementLink = ({
   };
   return (
     <>
-      {JSON.stringify(singleElementLink)}
       {loading && <Spinner toggle={false} />}
       {!loading && singleElementLink ? (
         <div>

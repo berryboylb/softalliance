@@ -14,6 +14,7 @@ import {
   faChevronDown,
   faChevronUp,
   faCheck,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { handleBeforeUnload } from "../../utils";
 const CreateElementForm = ({
@@ -509,6 +510,46 @@ const CreateElementForm = ({
               icon={toggleMonths ? faChevronUp : faChevronDown}
             />
           </button>
+
+          {watch("payFrequency") === "selectedMonths" && (
+            <div className={Styles.selected_}>
+              <ul>
+                {months.map((item) => (
+                  <li key={item}>
+                    {item.slice(0, 3)}{" "}
+                    <FontAwesomeIcon
+                      className={Styles._icon_}
+                      onClick={() => handleMonths(item)}
+                      icon={faTimes}
+                    />
+                  </li>
+                ))}
+              </ul>
+              <div>
+                <button
+                  className={Styles.clear}
+                  type="button"
+                  onClick={() => {
+                    setMonths([]);
+                    setValue("selectedMonths", undefined);
+                  }}
+                  disabled={watch("payFrequency") === "monthly" ? true : false}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+                <button
+                  className={Styles.toggle}
+                  type="button"
+                  onClick={handletoggleMonths}
+                  disabled={watch("payFrequency") === "monthly" ? true : false}
+                >
+                  <FontAwesomeIcon
+                    icon={toggleMonths ? faChevronUp : faChevronDown}
+                  />
+                </button>
+              </div>
+            </div>
+          )}
 
           {toggleMonths && (
             <div

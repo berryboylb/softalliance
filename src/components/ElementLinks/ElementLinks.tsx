@@ -136,7 +136,7 @@ const ElementLinks = () => {
 
       <Modal modalIsOpen={editSuccess} closeModal={toggleEditSuccess}>
         <SuccessComp
-          toggle={toggleSecond}
+          toggle={toggleEditSuccess}
           message="Element link has been updated successfully"
           img={Success}
         />
